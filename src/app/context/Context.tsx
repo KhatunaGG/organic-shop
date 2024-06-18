@@ -1,8 +1,8 @@
 "use client";
 import React, { createContext, useEffect, useState } from "react";
 import datajson from "../data/data.json";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged } from "firebase/auth";
-import {auth} from '../firebase/config'
+// import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged } from "firebase/auth";
+// import {auth} from '../firebase/config'
 
 
 export type GlobalStateType = {
