@@ -2,7 +2,7 @@
 
 import { ClobalContext } from "@/app/context/Context";
 import Link from "next/link";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { BagIcon, HeartIcon } from "../_atoms";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
@@ -10,7 +10,6 @@ import { auth } from "@/app/firebase/config";
 import { useRouter } from "next/navigation";
 
 const SignSection = () => {
-  // const router = useRouter();
   const [currentUser] = useAuthState(auth);
   let userSession = null
   const context = useContext(ClobalContext);
@@ -18,11 +17,11 @@ const SignSection = () => {
   const { totalPrice, totalCount, favorites, loggedInUser } = context;
   
 
+if(currentUser) {
+  userSession = sessionStorage.getItem("user");
+}
 
 
-  useEffect(() => {
-    userSession = sessionStorage.getItem("user");
-  }, [currentUser]);
 
   return (
     <section className="w-full h-[15vh] md:h-[8vh] bg-green-950 flex flex-row items-center flex-grow justify-between px-[3%] lg:px-[7%] ">
