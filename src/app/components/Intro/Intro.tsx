@@ -14,16 +14,15 @@ import { auth } from "@/app/firebase/config";
 const Intro = () => {
 
     const context = useContext(ClobalContext);
-    const [currentUser] = useAuthState(auth);
-
     if (!context) return null;
-    
     const { totalPrice, totalCount, favorites, loggedInUser } = context;
-    let userSession = null;
-
-    if (currentUser) {
-        userSession = sessionStorage.getItem("user");
-    }
+    const [currentUser] = useAuthState(auth);
+    let userSession = null
+    
+  
+  if(currentUser) {
+    userSession = sessionStorage.getItem("user");
+  }
   
   return (
     <section className="w-full h-[15vh] md:h-[8vh] bg-green-950 flex flex-row items-center flex-grow justify-between px-[3%] lg:px-[7%] ">
