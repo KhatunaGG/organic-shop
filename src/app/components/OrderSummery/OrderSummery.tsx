@@ -1,4 +1,3 @@
-
 import React from "react";
 import Button from "../Button/Button";
 
@@ -39,8 +38,13 @@ const OrderSummery = () => {
         </h2>
 
         <div className="w-full flex flex-row items-center gap-2 text-xs lg:text-sm">
-          <input type="radio" name="" id="" value="" 
-          className="w-4 h-4 checked:bg-emerald-400 checked:hover:bg-emerald-400 checked:active:bg-emerald-400 checked:focus:bg-emerald-400 focus:bg-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400" />
+          <input
+            type="radio"
+            name=""
+            id=""
+            value=""
+            className="w-4 h-4 checked:bg-emerald-400 checked:hover:bg-emerald-400 checked:active:bg-emerald-400 checked:focus:bg-emerald-400 focus:bg-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400"
+          />
           <label htmlFor="">Cash on Delivery</label>
         </div>
 
@@ -50,7 +54,7 @@ const OrderSummery = () => {
         </div>
 
         <div className="w-full flex flex-row items-center gap-2 text-xs lg:text-sm">
-          <input type="radio"  name="" id="" value="" className="w-4 h-4" />
+          <input type="radio" name="" id="" value="" className="w-4 h-4" />
           <label htmlFor="">Amazon Pay</label>
         </div>
       </div>

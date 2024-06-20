@@ -1,4 +1,3 @@
-
 // import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 // import React from 'react';
 
@@ -9,7 +8,7 @@
 //     const auth = getAuth();
 //     createUserWithEmailAndPassword(auth, email, password)
 //       .then((userCredential) => {
-//         // Signed in 
+//         // Signed in
 //         const user = userCredential.user;
 //         console.log('User signed up:', user);
 //       })
@@ -27,43 +26,36 @@
 
 // export default Login;
 
-
-
-
 // import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 "use client";
-import { ClobalContext } from "@/app/context/Context";
+// import { ClobalContext } from "@/app/context/Context";
 import { auth } from "@/app/firebase/config";
 import { useRouter } from "next/navigation";
-import React, { useContext, useState } from "react";
+import React, {  useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-
 
 const Login = () => {
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter()
-  const context = useContext(ClobalContext);
-  if (!context) return;
-  const { setLoggedInUser } = context;
-
-
-
+  const router = useRouter();
+  // const context = useContext(ClobalContext);
+  // if (!context) return;
+  // const { setLoggedInUser } = context;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       const res = await signInWithEmailAndPassword(email, password);
-      if(res?.user){
+      if (res?.user) {
         sessionStorage.setItem("user", "exist");
         router.push("/");
-        setLoggedInUser(res.user.email || ''); 
+        // setLoggedInUser(res.user.email || "");
       }
       setEmail("");
       setPassword("");
-      console.log(res, 'response')
+      console.log(res, "response");
     } catch (er) {
       console.log(er);
     }
@@ -75,9 +67,7 @@ const Login = () => {
         Sign In
       </h1>
 
-      <form
-       onSubmit={handleSubmit}
-        className="w-full flex flex-col gap-6">
+      <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6">
         <div className="w-full flex flex-col  gap-y-1">
           <label htmlFor="">Email</label>
           <input
@@ -117,4 +107,3 @@ const Login = () => {
 };
 
 export default Login;
-

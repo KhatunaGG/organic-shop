@@ -4,7 +4,6 @@ import datajson from "../data/data.json";
 // import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged } from "firebase/auth";
 // import {auth} from '../firebase/config'
 
-
 export type GlobalStateType = {
   data: DataType[];
   addToCart: (value: DataType) => void;
@@ -34,7 +33,6 @@ export type GlobalStateType = {
   overlay: string;
   setLoggedInUser: React.Dispatch<React.SetStateAction<string>>;
 
- 
   loggedInUser: string;
   handleChange: (value: string) => void;
   isChecked: string;
@@ -72,29 +70,23 @@ const Context = ({ children }: { children: React.ReactNode }) => {
   const [value, setValue] = useState<number[]>([0, 20]);
   const [search, setSearch] = useState("");
   const [buttonInnerText, setButtonInnerText] = useState("");
-  const [overlay, setOverlay] = useState('')
+  const [overlay, setOverlay] = useState("");
 
-  const [length, setLength] = useState(data.length)
-  const [loggedInUser, setLoggedInUser] = useState('');
+  const [length, setLength] = useState(data.length);
+  const [loggedInUser, setLoggedInUser] = useState("");
 
-  const [isChecked, setIsChecked] = useState('')
+  const [isChecked, setIsChecked] = useState("");
 
+  console.log(isChecked, "isChecked");
 
-  console.log(isChecked, 'isChecked')
-
-
-const handleChange = (path: string) => {
-  console.log(path, 'path from context')
-  if(isChecked === path) {
-    setIsChecked('')
-  } else  {
-    setIsChecked(path)
-  }
-  
-}
-
-
-
+  const handleChange = (path: string) => {
+    console.log(path, "path from context");
+    if (isChecked === path) {
+      setIsChecked("");
+    } else {
+      setIsChecked(path);
+    }
+  };
 
   useEffect(() => {
     const categorySet = new Set(data.map((product) => product.category));
@@ -120,7 +112,6 @@ const handleChange = (path: string) => {
     setSearch(e.target.value);
   };
 
-
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (search && buttonInnerText.toLowerCase() === "search") {
@@ -134,8 +125,6 @@ const handleChange = (path: string) => {
       setData(typedDataJson);
     }
   };
-
-
 
   useEffect(() => {
     if (shoppingCartItems.length > 0) {
@@ -212,33 +201,6 @@ const handleChange = (path: string) => {
     return setShoppingCartItems(updatedShoppingCart);
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <ClobalContext.Provider
       value={{
@@ -265,13 +227,13 @@ const handleChange = (path: string) => {
         search,
         setButtonInnerText,
         length,
-        setOverlay, 
+        setOverlay,
         overlay,
         setLoggedInUser,
         loggedInUser,
         handleChange,
         isChecked,
-        setIsChecked
+        setIsChecked,
       }}
     >
       {children}
