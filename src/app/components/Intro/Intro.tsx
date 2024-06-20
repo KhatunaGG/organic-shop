@@ -1,12 +1,13 @@
 "use client";
 
 import { ClobalContext } from "@/app/context/Context";
-import Link from "next/link";
+// import Link from "next/link";
 import React, { useContext } from "react";
 import { BagIcon, HeartIcon } from "../_atoms";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { signOut } from "firebase/auth";
-import { auth } from "@/app/firebase/config";
+import SignSection from "../SignSection/SignSection";
+// import { useAuthState } from "react-firebase-hooks/auth";
+// import { signOut } from "firebase/auth";
+// import { auth } from "@/app/firebase/config";
 // import { useRouter } from "next/navigation";
 
 
@@ -16,13 +17,14 @@ const Intro = () => {
     const context = useContext(ClobalContext);
     if (!context) return null;
     const { totalPrice, totalCount, favorites, loggedInUser } = context;
-    const [currentUser] = useAuthState(auth);
-    let userSession = null
+
+  //   const [currentUser] = useAuthState(auth);
+  //   let userSession = null
     
   
-  if(currentUser) {
-    userSession = sessionStorage.getItem("user");
-  }
+  // if(currentUser) {
+  //   userSession = sessionStorage.getItem("user");
+  // }
   
   return (
     <section className="w-full h-[15vh] md:h-[8vh] bg-green-950 flex flex-row items-center flex-grow justify-between px-[3%] lg:px-[7%] ">
@@ -58,32 +60,10 @@ const Intro = () => {
           </div>
         </div>
 
-        <div className="w-full md:w-[50%] flex justify-end">
-          <div className="sign flex flex-row items-center gap-2 ">
-            <Link href={"/pages/signin"}>
-              <button className="text-gray-400 text-[13px]">
-              {/* Sign In */}
-                {currentUser?.email ? currentUser?.email : 'Sign In'}
-              </button>
-            </Link>
-            <span className="text-gray-400 text-[13px]">/</span>
-            <Link href={"/pages/signup"}>
-              <button
-                onClick={() => {
-                  if(currentUser?.email) {
-                        signOut(auth);
-                  sessionStorage.removeItem("user");
-                  }
-              
-                }}
-                className="text-gray-400 text-[13px]"
-              >
-                {/* Sign Up */}
-                {currentUser?.email ? 'Logout' : 'Sign Up'}
-              </button>
-            </Link>
-          </div>
-        </div>
+        <SignSection />
+
+      
+
       </div>
     </div>
   </section>
