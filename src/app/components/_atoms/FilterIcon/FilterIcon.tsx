@@ -16,9 +16,6 @@ const FilterIcon = ({ checked }: FilterIconPropsType) => {
       <path
         d="M18 5H9"
         stroke="white"
-        // stroke-width="1.5"
-        // stroke-linecap="round"
-        // stroke-linejoin="round"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -26,9 +23,6 @@ const FilterIcon = ({ checked }: FilterIconPropsType) => {
       <path
         d="M13 14H4"
         stroke="white"
-        // stroke-width="1.5"
-        // stroke-linecap="round"
-        // stroke-linejoin="round"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"

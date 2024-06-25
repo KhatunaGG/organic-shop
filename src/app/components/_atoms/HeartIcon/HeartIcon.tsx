@@ -5,17 +5,17 @@ import React, { useContext } from "react";
 type HeartIconPropsType = {
   product?: DataType;
   width?: string;
-  hight?: string;
+  height?: string;
 };
 
-function HeartIcon({ product, width, hight }: HeartIconPropsType) {
+function HeartIcon({ product, width, height }: HeartIconPropsType) {
   const context = useContext(ClobalContext);
   if (!context) return;
   const { favorites } = context;
 
   return (
     <svg
-      className={`${width} ${hight}`}
+      className={`${width} ${height}`}
       width="32"
       height="33"
       viewBox="0 0 32 33"

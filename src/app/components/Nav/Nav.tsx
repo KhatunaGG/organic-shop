@@ -25,9 +25,9 @@ const Nav = () => {
         <Button text="Search" width="20%" />
       </form> */}
 
-      <div className="h-[70%] w-[1px] bg-[#b6b2b2]"></div>
+      <div className="hidden md:flex h-[70%] w-[1px] bg-[#b6b2b2]"></div>
 
-      <div className="w-[50%] flex items-center justify-start gap-4 text-[#7d7979] font-bold cursor-pointer ml-4">
+      <div className="hidden w-[50%] md:flex items-center justify-start gap-4 text-[#7d7979] font-bold cursor-pointer ml-4">
         <Link href={`pages/favorites`} >
           <span>Favorites</span>
         </Link>

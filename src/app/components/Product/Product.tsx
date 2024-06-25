@@ -6,6 +6,7 @@ import Stack from "@mui/material/Stack";
 import Link from "next/link";
 import { useContext } from "react";
 import { BagIcon, HeartIcon } from "../_atoms";
+import Image from "next/image";
 
 type ProductPropsType = {
   product: DataType;
@@ -22,10 +23,11 @@ const Product = ({ product }: ProductPropsType) => {
         onClick={() => getFavorites(product)}
         className="outline-none absolute right-[3%] top-[3%] w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center  hover:bg-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 "
       >
-        <HeartIcon product={product} width={"w-6"} hight={"h-6"} />
+        <HeartIcon product={product} width={"w-6"} height={"h-6"} />
       </button>
       <div className="w-full flex items-center justify-center">
-        <img className="w-[200px] h-[200px] " src={product.image} alt="" />
+        <Image src={product.image} alt={""} width={200} height={200}/>
+        {/* <img className="w-[200px] h-[200px] " src={product.image} alt="" /> */}
       </div>
       <div className="w-full p-4">
         <Link href={`/pages/Details/${product.id}`}>

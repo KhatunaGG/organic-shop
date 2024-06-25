@@ -2,6 +2,7 @@
 import React, { useContext,  useState } from "react";
 import Button from "../Button/Button";
 import { ClobalContext } from "@/app/context/Context";
+import { SearchIcon } from "../_atoms";
 
 function Search() {
     const context = useContext(ClobalContext);
@@ -12,12 +13,13 @@ function Search() {
   return (
     <form 
     onSubmit={handleSearch}
-    className="px-[3%] lg:px-[7%] py-2 w-[50%] relative flex items-center">
-      <img
+    className="w-full px-[3%] lg:px-[7%] py-2 md:w-[50%] relative flex items-center">
+      <SearchIcon />
+      {/* <img
         src="/assets/search-icon.svg"
         alt=""
         className="absolute pl-2  transform -translate-y-1/2 top-1/2"
-      />
+      /> */}
       <input
       onChange={getInputSearch}
         className="pl-10  py-1.5 rounded-l-md outline-none flex-grow  border border-[#dfdcdc]"

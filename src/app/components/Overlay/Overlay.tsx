@@ -6,7 +6,7 @@ import {
   useControls,
 } from "react-zoom-pan-pinch";
 import { ClobalContext } from "@/app/context/Context";
-
+import Image from "next/image";
 
 const Overlay = () => {
   const context = useContext(ClobalContext);
@@ -53,7 +53,8 @@ const Overlay = () => {
               <>
                 <Controls />
                 <TransformComponent>
-                  <img src={overlay} alt="" />
+                  {/* <img src={overlay} alt="" /> */}
+                  <Image src={overlay} alt={""} width={400} height={400} />
                 </TransformComponent>
               </>
             )}

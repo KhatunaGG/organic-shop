@@ -1,6 +1,7 @@
 "use client";
 import { ClobalContext, DataType } from "@/app/context/Context";
 import React, { useContext, useEffect } from "react";
+import Image from "next/image";
 
 type CartItemPropsType = {
   cartItem: DataType;
@@ -18,11 +19,13 @@ function CartItem({ cartItem }: CartItemPropsType) {
       <div className="border border-gray-200 md:p-1 flex-grow">
         <div className="w-full flex flex-row items-center md:justify-between  py-2 ">
           <div className="capitalize text-base text-[var(--text-gray)] w-[60%] md:w-[40%] flex flex-row items-center">
-            <img
+            
+            <Image src={cartItem.image} alt={""} width={100} height={100} />
+            {/* <img
               className="w-[50px] h-[50px] md:w-[80px] md:h-[80px] lg:w-[100px] lg:h-[100px]"
               src={cartItem.image}
               alt=""
-            />
+            /> */}
             <p className="text-xs md:text-sm lg:text-sm">{cartItem.title}</p>
           </div>
 

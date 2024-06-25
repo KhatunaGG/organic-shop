@@ -91,7 +91,7 @@ const Context = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const categorySet = new Set(data.map((product) => product.category));
     setCategoryArray(Array.from(categorySet));
-  }, []);
+  }, [data]);
 
   const handleFilter = (index: number, categoryitem: string) => {
     if (checked === index) {

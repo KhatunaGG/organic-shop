@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../Button/Button";
+import Image from "next/image";
 
 const OrderSummery = () => {
   return (
@@ -9,7 +10,8 @@ const OrderSummery = () => {
       </h2>
       <div className="bg-green-200 flex flex-col items-start gap-2">
         <div className="w-full flex flex-row items-center justify-between">
-          <img className="w-[50px] h-[50px]" src="" alt="" />
+          <Image src={""} alt={""} width={50} height={50}/>
+          {/* <img className="w-[50px] h-[50px]" src="" alt="" /> */}
           <p className="inline-block">title</p>
           <p className="inline-block">pricee</p>
         </div>
