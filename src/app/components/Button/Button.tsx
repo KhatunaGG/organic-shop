@@ -12,9 +12,9 @@ type ButtonPropsType = {
 
 const Button = ({ text, width, rounded, paddingY }: ButtonPropsType) => {
   const context = useContext(ClobalContext);
+  const router = useRouter()
   if (!context) return;
   const { setButtonInnerText } = context;
-  const router = useRouter()
   setButtonInnerText(text)
   
   return (
