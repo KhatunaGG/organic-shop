@@ -1,8 +1,9 @@
 "use client";
+import { ClobalContext } from "@/app/context/Context";
 // import { ClobalContext } from "@/app/context/Context";
 import { auth } from "@/app/firebase/config";
-import { useRouter } from "next/navigation";
-import React, {  useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useContext, useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 const Login = () => {
@@ -10,9 +11,11 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  // const context = useContext(ClobalContext);
-  // if (!context) return;
-  // const { setLoggedInUser } = context;
+  const path = usePathname();
+  console.log(path, "pathName");
+  const context = useContext(ClobalContext);
+  if (!context) return;
+  const { handleChange, isChecked, setIsChecked } = context;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -20,7 +23,7 @@ const Login = () => {
       const res = await signInWithEmailAndPassword(email, password);
       if (res?.user) {
         sessionStorage.setItem("user", "exist");
-        router.push("/");
+        router.push("/pages/checkout");
         // setLoggedInUser(res.user.email || "");
       }
       setEmail("");
@@ -42,7 +45,7 @@ const Login = () => {
           <label htmlFor="">Email</label>
           <input
             onChange={(e) => setEmail(e.target.value)}
-            className="border border-[#e1dfdf] py-[14px] rounded-md pl-2"
+            className="border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
             placeholder="Email"
             type="text"
             required
@@ -53,23 +56,45 @@ const Login = () => {
           <label htmlFor="">Password</label>
           <input
             onChange={(e) => setPassword(e.target.value)}
-            className="border border-[#e1dfdf] py-[14px] rounded-md pl-2"
+            className="border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
             placeholder="Password"
             type="password"
             required
           />
         </div>
 
-        <button type="submit" className="w-full bg-gray-200">
+        <button
+          type="submit"
+          className="w-full outline-none  py-4  bg-gradient-to-b from-green-500 to-yellow-300 
+      border border-yellow-300 rounded-md
+      focus:outline-none focus:ring-2 focus:ring-yellow-300 active:from-yellow-300 font-bold tracking-wider text-base"
+        >
           Sign in
         </button>
       </form>
 
-      <div className="w-full flex flex-row items-center justify-start gap-2 text-xs lg:text-sm">
-        <input type="checkbox" name="" id="" />
+      <div className="w-full flex flex-row items-center justify-start gap-4 text-xs lg:text-sm">
+        <input
+          onChange={() => handleChange(path)}
+          checked={isChecked === path}
+          type="checkbox"
+          name=""
+          id=""
+        />
         <label htmlFor="">
           Do not have an account?
-          <span className="font-bold text-green-950"> Sign up </span>
+          <span
+            onClick={() => {
+              if (isChecked === path) {
+                router.push("/pages/signup");
+                setIsChecked("");
+              }
+            }}
+            className="font-bold text-green-800"
+          >
+            {" "}
+            Sign up{" "}
+          </span>
         </label>
       </div>
     </div>

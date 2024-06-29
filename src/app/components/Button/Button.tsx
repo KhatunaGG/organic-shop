@@ -1,5 +1,6 @@
 'use client'
 import { ClobalContext } from "@/app/context/Context";
+import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 
 type ButtonPropsType = {
@@ -13,10 +14,16 @@ const Button = ({ text, width, rounded, paddingY }: ButtonPropsType) => {
   const context = useContext(ClobalContext);
   if (!context) return;
   const { setButtonInnerText } = context;
+  const router = useRouter()
   setButtonInnerText(text)
   
   return (
     <button
+    onClick={() => {
+      if(text === "Proceed to checkout") {
+        router.push('/pages/signup')
+      }
+    }}
       style={{ width: width, borderRadius: rounded, paddingTop: paddingY, paddingBottom: paddingY}}
       className="outline-none px-4 py-2 text-sm bg-gradient-to-b from-green-500 to-yellow-300 
       border border-yellow-300 rounded-r-md

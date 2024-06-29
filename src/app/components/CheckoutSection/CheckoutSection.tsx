@@ -61,6 +61,7 @@ function CheckoutSection() {
               <input
                 className=" border border-[#e1dfdf] py-[14px] rounded-md pl-2"
                 type="text"
+                placeholder="Country / Region"
               />
             </div>
 
@@ -69,6 +70,7 @@ function CheckoutSection() {
               <input
                 className="border border-[#e1dfdf] py-[14px] rounded-md pl-2"
                 type="text"
+                placeholder="States"
               />
             </div>
 

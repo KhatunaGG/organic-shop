@@ -1,4 +1,3 @@
-
 "use client";
 import { ClobalContext } from "@/app/context/Context";
 import { auth } from "@/app/firebase/config";
@@ -45,7 +44,7 @@ const Register = () => {
           <label htmlFor="">Email</label>
           <input
             onChange={(e) => setEmail(e.target.value)}
-            className="border border-[#e1dfdf] py-[14px] rounded-md pl-2"
+            className="border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
             placeholder="Email"
             type="text"
             value={email}
@@ -57,7 +56,7 @@ const Register = () => {
           <label htmlFor="">Password</label>
           <input
             onChange={(e) => setPassword(e.target.value)}
-            className="border border-[#e1dfdf] py-[14px] rounded-md pl-2"
+            className="border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
             placeholder="Password"
             type="password"
             value={password}
@@ -65,7 +64,12 @@ const Register = () => {
           />
         </div>
 
-        <button type="submit" className="w-full bg-gray-200">
+        <button
+          type="submit"
+          className="w-full outline-none  py-4  bg-gradient-to-b from-green-500 to-yellow-300 
+      border border-yellow-300 rounded-md
+      focus:outline-none focus:ring-2 focus:ring-yellow-300 active:from-yellow-300 font-bold tracking-wider text-base"
+        >
           Sign up
         </button>
       </form>
@@ -87,9 +91,10 @@ const Register = () => {
                 setIsChecked("");
               }
             }}
-            className="font-bold text-green-950 cursor-pointer"
+            className="font-bold text-green-800 cursor-pointer"
           >
-               Sign in
+            {" "}
+            Sign in
           </span>
         </label>
       </div>
