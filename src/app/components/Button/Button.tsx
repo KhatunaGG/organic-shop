@@ -16,12 +16,16 @@ const Button = ({ text, width, rounded, paddingY }: ButtonPropsType) => {
   if (!context) return;
   const { setButtonInnerText } = context;
   setButtonInnerText(text)
+
+  let userSession = sessionStorage.getItem("user");
   
   return (
     <button
     onClick={() => {
-      if(text === "Proceed to checkout") {
+      if(text === "Proceed to checkout" && !userSession) {
         router.push('/pages/signup')
+      } else {
+        router.push('/pages/checkout')
       }
     }}
       style={{ width: width, borderRadius: rounded, paddingTop: paddingY, paddingBottom: paddingY}}

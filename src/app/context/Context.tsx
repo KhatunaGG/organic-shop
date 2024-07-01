@@ -1,6 +1,8 @@
 "use client";
 import React, { createContext, useEffect, useState } from "react";
 import datajson from "../data/data.json";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase/config";
 // import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged } from "firebase/auth";
 // import {auth} from '../firebase/config'
 
@@ -37,6 +39,7 @@ export type GlobalStateType = {
   handleChange: (value: string) => void;
   isChecked: string;
   setIsChecked: React.Dispatch<React.SetStateAction<string>>;
+  // setIsCurrentUser:  React.Dispatch<React.SetStateAction<string>>
 };
 
 export type RatingType = {
@@ -77,10 +80,13 @@ const Context = ({ children }: { children: React.ReactNode }) => {
 
   const [isChecked, setIsChecked] = useState("");
 
-  console.log(isChecked, "isChecked");
+
+  console.log(loggedInUser, 'loggedInUser')
+
+
 
   const handleChange = (path: string) => {
-    console.log(path, "path from context");
+    // console.log(path, "path from context");
     if (isChecked === path) {
       setIsChecked("");
     } else {
@@ -234,6 +240,7 @@ const Context = ({ children }: { children: React.ReactNode }) => {
         handleChange,
         isChecked,
         setIsChecked,
+        // setIsCurrentUser
       }}
     >
       {children}

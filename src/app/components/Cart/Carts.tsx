@@ -10,6 +10,7 @@ const Carts = () => {
   const context = useContext(ClobalContext);
   if (!context) return;
   const { shoppingCartItems, totalPrice, totalCount, setShoppingCartItems } = context;
+  console.log(shoppingCartItems)
 
   return (
     <div className="flex flex-col flex-grow  gap-6 mb-10 mt-8 items-center w-full ">

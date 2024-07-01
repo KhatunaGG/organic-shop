@@ -27,8 +27,8 @@ const CartTotal = ({ totalPrice }: CartTotalPropsType) => {
             className={`${totalPrice >= 50.0 && "text-green-600"} font-bold`}
           >
             {" "}
-            {totalPrice < 50.0 ? "$" : ""}
-            {totalPrice < 50.0 ? 3.99 : "Free"}
+            {totalPrice <= 50.0 ? "$" : ""}
+            {totalPrice <= 50.0 ? 3.99 : "Free"}
           </span>
         </div>
 

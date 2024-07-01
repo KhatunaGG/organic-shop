@@ -4,18 +4,22 @@ import { ClobalContext } from "@/app/context/Context";
 import { auth } from "@/app/firebase/config";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useAuthState, useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 const Login = () => {
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [currentUser] = useAuthState(auth);
   const router = useRouter();
   const path = usePathname();
-  console.log(path, "pathName");
   const context = useContext(ClobalContext);
   if (!context) return;
   const { handleChange, isChecked, setIsChecked } = context;
+
+
+console.log(currentUser, 'currentuser')
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -25,6 +29,7 @@ const Login = () => {
         sessionStorage.setItem("user", "exist");
         router.push("/pages/checkout");
         // setLoggedInUser(res.user.email || "");
+        // setLoggedInUser(currentUser?.email || "");
       }
       setEmail("");
       setPassword("");
