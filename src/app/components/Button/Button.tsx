@@ -17,17 +17,10 @@ const Button = ({ text, width, rounded, paddingY }: ButtonPropsType) => {
   const { setButtonInnerText } = context;
   setButtonInnerText(text)
 
-  let userSession = sessionStorage.getItem("user");
   
   return (
     <button
-    onClick={() => {
-      if(text === "Proceed to checkout" && !userSession) {
-        router.push('/pages/signup')
-      } else {
-        router.push('/pages/checkout')
-      }
-    }}
+    onClick={() => router.push('/pages/checkout')}
       style={{ width: width, borderRadius: rounded, paddingTop: paddingY, paddingBottom: paddingY}}
       className="outline-none px-4 py-2 text-sm bg-gradient-to-b from-green-500 to-yellow-300 
       border border-yellow-300 rounded-r-md
@@ -39,3 +32,4 @@ const Button = ({ text, width, rounded, paddingY }: ButtonPropsType) => {
 };
 
 export default Button;
+
