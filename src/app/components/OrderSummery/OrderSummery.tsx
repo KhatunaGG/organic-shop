@@ -19,8 +19,8 @@ const OrderSummery = () => {
         Order Summery
       </h2>
 
-      {shoppingCartItems.map((item) => (
-        <div className="flex flex-col items-start gap-2">
+      {shoppingCartItems.map((item, i) => (
+        <div key={i} className="flex flex-col items-start gap-2">
           <div className="w-full flex flex-row items-center justify-between">
             <Image src={item.image} alt={""} width={50} height={50} />
             {/* <img className="w-[50px] h-[50px]" src="" alt="" /> */}
