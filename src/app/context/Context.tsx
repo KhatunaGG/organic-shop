@@ -40,6 +40,8 @@ export type GlobalStateType = {
   isChecked: string;
   setIsChecked: React.Dispatch<React.SetStateAction<string>>;
   // setIsCurrentUser:  React.Dispatch<React.SetStateAction<string>>
+  handleRadioChange: (value: string) => void;
+  isRadioChecked: string | null;
 };
 
 export type RatingType = {
@@ -79,11 +81,19 @@ const Context = ({ children }: { children: React.ReactNode }) => {
   const [loggedInUser, setLoggedInUser] = useState("");
 
   const [isChecked, setIsChecked] = useState("");
+  const [isRadioChecked, setIsRadioChecked] = useState<string | null >(null)
 
 
   console.log(loggedInUser, 'loggedInUser')
 
 
+  const handleRadioChange =  (pay: string) => {
+    if(isRadioChecked === pay) {
+        setIsRadioChecked(null)
+    } else {
+      setIsRadioChecked(pay)
+    }
+  }
 
   const handleChange = (path: string) => {
     // console.log(path, "path from context");
@@ -241,6 +251,8 @@ const Context = ({ children }: { children: React.ReactNode }) => {
         isChecked,
         setIsChecked,
         // setIsCurrentUser
+        handleRadioChange,
+        isRadioChecked
       }}
     >
       {children}

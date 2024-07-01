@@ -7,8 +7,14 @@ import { ClobalContext } from "@/app/context/Context";
 const OrderSummery = () => {
   const context = useContext(ClobalContext);
   if (!context) return;
-  const { shoppingCartItems, totalPrice, totalCount, setShoppingCartItems } =
-    context;
+  const {
+    shoppingCartItems,
+    totalPrice,
+    totalCount,
+    setShoppingCartItems,
+    handleRadioChange,
+    isRadioChecked
+  } = context;
   console.log(shoppingCartItems, "shoppingCartItems");
   console.log(totalCount, "totlacount");
   console.log(totalPrice, "totlaprice");
@@ -65,8 +71,10 @@ const OrderSummery = () => {
           Payment Method
         </h2>
 
-          <div className="w-full flex flex-row items-center gap-2 text-xs lg:text-sm">
+        <div className="w-full flex flex-row items-center gap-2 text-xs lg:text-sm">
           <input
+            onChange={() => handleRadioChange("cash")}
+            checked={isRadioChecked === 'cash'}
             type="radio"
             name="payment"
             id="cod"
@@ -77,12 +85,28 @@ const OrderSummery = () => {
         </div>
 
         <div className="w-full flex flex-row items-center gap-2 text-xs lg:text-sm">
-          <input type="radio" name="" id="" value="" className="custom-radio" />
+          <input
+            onChange={() => handleRadioChange("paypal")}
+            checked={isRadioChecked === "paypal"}
+            type="radio"
+            name=""
+            id=""
+            value=""
+            className="custom-radio"
+          />
           <label htmlFor="paypal">Paypal</label>
         </div>
 
         <div className="w-full flex flex-row items-center gap-2 text-xs lg:text-sm">
-          <input type="radio" name="" id="" value="" className="custom-radio" />
+          <input
+            onChange={() => handleRadioChange("amazone")}
+            checked={isRadioChecked === "amazone"}
+            type="radio"
+            name=""
+            id=""
+            value=""
+            className="custom-radio"
+          />
           <label htmlFor="amazone">Amazon Pay</label>
         </div>
       </div>
