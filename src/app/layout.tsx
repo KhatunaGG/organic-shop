@@ -1,15 +1,13 @@
-
 import type { Metadata } from "next";
 import { League_Spartan } from "next/font/google";
 import "./globals.css";
 import GlobalContextProvider from "./context/Context";
-
+import Footer from "./components/Footer/Footer";
 
 const LSpartan = League_Spartan({
   subsets: ["latin"],
   weight: ["700", "600", "500"],
 });
-
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,9 +24,9 @@ export default function RootLayout({
       <body className={LSpartan.className}>
         <GlobalContextProvider>
           {children}
+          <Footer />
         </GlobalContextProvider>
-        
-        </body>
+      </body>
     </html>
   );
 }

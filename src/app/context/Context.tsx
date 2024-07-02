@@ -21,8 +21,9 @@ export type GlobalStateType = {
   getFavorites: (value: DataType) => void;
   favorites: DataType[];
   categoryArray: String[];
-  checked: number | null;
-  handleFilter: (num: number, str: string) => void;
+  checked: string | null;
+  // handleFilter: (num: number, str: string) => void;
+  handleFilter: (str: string) => void;
   value: number[];
   setValue: React.Dispatch<React.SetStateAction<number[]>>;
   getInputSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -71,7 +72,8 @@ const Context = ({ children }: { children: React.ReactNode }) => {
   const [totalCount, setTotalCount] = useState(0);
   const [favorites, setFavorites] = useState<DataType[]>([]);
   const [categoryArray, setCategoryArray] = useState<string[]>([]);
-  const [checked, setChecked] = useState<number | null>(null);
+  // const [checked, setChecked] = useState<number | null>(null);
+  const [checked, setChecked] = useState<string | null>(null);
   const [value, setValue] = useState<number[]>([0, 20]);
   const [search, setSearch] = useState("");
   const [buttonInnerText, setButtonInnerText] = useState("");
@@ -96,7 +98,6 @@ const Context = ({ children }: { children: React.ReactNode }) => {
   }
 
   const handleChange = (path: string) => {
-    // console.log(path, "path from context");
     if (isChecked === path) {
       setIsChecked("");
     } else {
@@ -109,12 +110,37 @@ const Context = ({ children }: { children: React.ReactNode }) => {
     setCategoryArray(Array.from(categorySet));
   }, [data]);
 
-  const handleFilter = (index: number, categoryitem: string) => {
-    if (checked === index) {
+  // const handleFilter = (index: number, categoryitem: string) => {
+
+  //   console.log(index, 'index')
+  //   console.log(categoryitem, 'categoryitem')
+  //   if (checked === index) {
+  //     setChecked(null);
+  //     setData(typedDataJson);
+  //   } else {
+  //     setChecked(index);
+  //     setData(
+  //       typedDataJson.filter(
+  //         (item) => item.category.toLowerCase() === categoryitem
+  //       )
+  //     );
+  //   }
+  // };
+
+
+
+
+
+
+
+  const handleFilter = ( categoryitem: string) => {
+
+    console.log(categoryitem, 'categoryitem')
+    if (checked === categoryitem) {
       setChecked(null);
       setData(typedDataJson);
     } else {
-      setChecked(index);
+      setChecked(categoryitem);
       setData(
         typedDataJson.filter(
           (item) => item.category.toLowerCase() === categoryitem
@@ -123,8 +149,12 @@ const Context = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+
+
+
+
+
   const getInputSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     setSearch(e.target.value);
   };
 

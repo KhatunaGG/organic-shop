@@ -1,7 +1,7 @@
 import React from "react";
 
 type FilterIconPropsType = {
-  checked: number | null;
+  checked: string | null;
 };
 
 const FilterIcon = ({ checked }: FilterIconPropsType) => {

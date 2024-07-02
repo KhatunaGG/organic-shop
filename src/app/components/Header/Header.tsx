@@ -11,7 +11,7 @@ const Header = () => {
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-screen-xl w-full flex flex-col items-start gap-4 px-[3%] lg:px-[7%] z-10">
         <div className="flex flex-row items-center gap-4">
           <LeafIcon />
-          <EcobazarIcon />
+          <EcobazarIcon location={'header'} />
         </div>
 
         <div className="flex flex-row space-x-2 items-center">

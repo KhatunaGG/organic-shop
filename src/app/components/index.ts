@@ -18,5 +18,7 @@ export { default as Scroll } from './Scroll/Scroll'
 export { default as Overlay } from './Overlay/Overlay'
 export { default as Login } from './Login/Login'
 export { default as Intro } from './Intro/Intro'
+export { default as Footer } from './Intro/Intro'
+export { default as Deals } from './Deals/Deals'
 
 
