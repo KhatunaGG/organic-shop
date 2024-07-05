@@ -84,6 +84,7 @@ import { FilterIcon, FreeIcon } from "../_atoms";
 
 import Slider from "@mui/material/Slider";
 import Deals from "../Deals/Deals";
+import Video from "../Video/Video";
 
 function Filter() {
   const context = useContext(ClobalContext);
@@ -159,8 +160,8 @@ function Filter() {
       <div className="w-full bg-green-200 text-green-950 flex items-center p-4 rounded-lg mt-6 gap-2 shadow-lg">
         <FreeIcon />
         <p className="font-medium">Free Shipping over <span className="font-bold">$50.00</span></p>
-
       </div>
+      <Video />
     </div>
   );
 }

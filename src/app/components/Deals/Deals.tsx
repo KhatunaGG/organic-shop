@@ -1,5 +1,5 @@
 import React from "react";
-import ArrowGreenIcon from "../_atoms/ArrowGreenIcon/ArrowGreenIcon";
+import SecondaryButton from "../SecondaryButton/SecondaryButton";
 
 const Deals = () => {
   return (
@@ -16,16 +16,7 @@ const Deals = () => {
           <div className="text-xs font-thin text-green-500">Best Deals</div>
           <h2 className="uppercase">Sale of the Day</h2>
         </div>
-
-        {/* <button className="flex gap-2 items-center justify-center bg-white rounded-2xl px-8 py-2 cursor-pointer outline-none border-none hover:bg-green-600 hover:text-white duration-300 ease-in-out">
-          <span className="text-xs text-green-500">Shop Now</span>
-          <ArrowGreenIcon />
-        </button> */}
-
-        <button className="flex gap-2 items-center justify-center bg-white rounded-2xl px-8 py-2 cursor-pointer outline-none border-none text-green-500 hover:bg-green-600 hover:text-white duration-300 ease-in-out">
-          <span className="text-xs">Shop Now</span>
-          <ArrowGreenIcon />
-        </button>
+        <SecondaryButton text={'Shop Now'} location={'deals'} />
       </div>
     </div>
   );

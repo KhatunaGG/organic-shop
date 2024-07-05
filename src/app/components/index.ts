@@ -20,5 +20,8 @@ export { default as Login } from './Login/Login'
 export { default as Intro } from './Intro/Intro'
 export { default as Footer } from './Intro/Intro'
 export { default as Deals } from './Deals/Deals'
+export { default as SaleBanner } from './SaleBanner/SaleBanner'
+export { default as SecondaryButton } from './SecondaryButton/SecondaryButton'
+export { default as Video } from './Video/Video'
 
 
