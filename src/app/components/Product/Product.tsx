@@ -32,8 +32,9 @@ const Product = ({ product }: ProductPropsType) => {
       <div className="w-full p-4">
         <Link href={`/pages/Details/${product.id}`}>
           <h2 className="w-full text-left  pt-2">{product.title}</h2>
-          <h2 className="w-full text-left font-bold text-green-900">
-            {product.price.toFixed(2)}
+          <h2 className="w-full text-left font-bold text-green-900 flex items-center gap-4">
+            <span className={`${product.sale ? 'line-through' : ''}`}>{product.price.toFixed(2)}</span>
+             {product.sale && (<span className="text-red-600">${product.sale.toFixed(2)}</span>)}
           </h2>
 
           <Stack className="w-full text-left pb-4 pt-4" spacing={1}>

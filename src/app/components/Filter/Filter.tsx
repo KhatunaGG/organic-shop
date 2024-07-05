@@ -83,8 +83,10 @@ import React, { useContext } from "react";
 import { FilterIcon, FreeIcon } from "../_atoms";
 
 import Slider from "@mui/material/Slider";
-import Deals from "../Deals/Deals";
-import Video from "../Video/Video";
+// import Deals from "../Deals/Deals";
+// import Video from "../Video/Video";
+// import ImageSlider from "../ImageSlider/ImageSlider";
+import { Deals, Video, ImageSlider } from "@/app/components";
 
 function Filter() {
   const context = useContext(ClobalContext);
@@ -162,6 +164,7 @@ function Filter() {
         <p className="font-medium">Free Shipping over <span className="font-bold">$50.00</span></p>
       </div>
       <Video />
+      <ImageSlider data={data} />
     </div>
   );
 }

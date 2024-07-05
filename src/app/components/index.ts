@@ -23,5 +23,7 @@ export { default as Deals } from './Deals/Deals'
 export { default as SaleBanner } from './SaleBanner/SaleBanner'
 export { default as SecondaryButton } from './SecondaryButton/SecondaryButton'
 export { default as Video } from './Video/Video'
+export { default as SalesSection} from './SalesSection/SalesSection'
+export { default as ImageSlider} from './ImageSlider/ImageSlider'
 
 

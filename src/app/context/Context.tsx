@@ -18,6 +18,7 @@ export type GlobalStateType = {
   totalCount: number;
   removeCartItem: (value: number) => void;
   setShoppingCartItems: React.Dispatch<React.SetStateAction<DataType[]>>;
+  // setShoppingCartItems: (items: DataType[]) => void;
   getFavorites: (value: DataType) => void;
   favorites: DataType[];
   categoryArray: String[];
@@ -60,6 +61,7 @@ export type DataType = {
   image: string;
   rating: RatingType;
   count?: number;
+  sale?: number;
 };
 
 export const typedDataJson = datajson as DataType[];
@@ -230,6 +232,18 @@ const Context = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
+  // const decrement = (countMinusId: number) => {
+  //   setShoppingCartItems((prevItems) =>
+  //     prevItems.map((item) =>
+  //       item.id === countMinusId
+  //         ? { ...item, count: Math.max(0, (item.count || 0) - 1) }
+  //         : item
+  //     )
+  //   );
+  // };
+
+
+
   const decrement = (countMinusId: number) => {
     setShoppingCartItems((prevItems) =>
       prevItems.map((item) =>
@@ -239,6 +253,13 @@ const Context = ({ children }: { children: React.ReactNode }) => {
       )
     );
   };
+
+
+
+
+
+
+
 
   const removeCartItem = (removeId: number) => {
     const updatedShoppingCart = shoppingCartItems.filter(
