@@ -31,10 +31,11 @@ const VideoArr: VideoPropsType = [
   {
     title: "Farm Pioneering Organics in Croatia",
     // videoURL: "https://www.youtube-nocookie.com/embed/aRxymTETvXk?si=qr-jO_3x-lcYfgLp" ,
-    videoURL: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+    videoURL:
+      "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
     duration: 360,
     view: 21,
-    img: '/assets/video.png'
+    img: "/assets/video.png",
   },
 ];
 
@@ -60,9 +61,8 @@ const Video = () => {
   return (
     <div className="w-full flex flex-col gap-2">
       {VideoArr.map((el, i) => (
-        <div>
+        <div key={i}>
           <a
-            key={i}
             onMouseEnter={() => setIsVideoPlaying(true)}
             onMouseLeave={() => setIsVideoPlaying(false)}
             href={el.videoURL}
@@ -105,5 +105,3 @@ const Video = () => {
 };
 
 export default Video;
-
-
