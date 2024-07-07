@@ -88,7 +88,7 @@ const Context = ({ children }: { children: React.ReactNode }) => {
   const [isRadioChecked, setIsRadioChecked] = useState<string | null >(null)
 
 
-  console.log(loggedInUser, 'loggedInUser')
+  // console.log(loggedInUser, 'loggedInUser')
 
 
   const handleRadioChange =  (pay: string) => {

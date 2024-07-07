@@ -15,12 +15,12 @@ const OrderSummery = () => {
     handleRadioChange,
     isRadioChecked
   } = context;
-  console.log(shoppingCartItems, "shoppingCartItems");
-  console.log(totalCount, "totlacount");
-  console.log(totalPrice, "totlaprice");
+  // console.log(shoppingCartItems, "shoppingCartItems");
+  // console.log(totalCount, "totlacount");
+  // console.log(totalPrice, "totlaprice");
 
   return (
-    <div className="right-side w-full md:w-[30%] border border-[#e1dfdf] shadow-md rounded-md p-6 flex flex-col gap-4 ">
+    <div className="right-side w-full  border border-[#e1dfdf] shadow-md rounded-md p-6 flex flex-col gap-4 ">
       <h2 className="font-bold tracking-wide text-green-950 text-[18px]">
         Order Summery
       </h2>

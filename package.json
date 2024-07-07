@@ -17,14 +17,18 @@
     "react": "^18",
     "react-dom": "^18",
     "react-firebase-hooks": "^5.1.1",
+    "react-hook-form": "^7.52.1",
     "react-responsive-carousel": "^3.2.23",
     "react-scroll-to-top": "^3.0.0",
+    "react-select": "^5.8.0",
+    "react-select-country-list": "^2.2.3",
     "react-zoom-pan-pinch": "^3.4.4"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-select-country-list": "^2.2.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
     "postcss": "^8",

@@ -24,6 +24,7 @@ const Button = ({ text, width, rounded, paddingY }: ButtonPropsType) => {
           router.push("/pages/checkout");
         }
       }}
+      type={text === 'Place Order' ? "submit" : "button"}
       style={{
         width: width,
         borderRadius: rounded,

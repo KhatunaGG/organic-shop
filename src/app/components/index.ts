@@ -25,5 +25,6 @@ export { default as SecondaryButton } from './SecondaryButton/SecondaryButton'
 export { default as Video } from './Video/Video'
 export { default as SalesSection} from './SalesSection/SalesSection'
 export { default as ImageSlider} from './ImageSlider/ImageSlider'
+export { default as Form} from './Form/Form'
 
 
