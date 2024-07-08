@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@hookform/resolvers": "^3.9.0",
     "@mui/material": "^5.15.20",
     "firebase": "^10.12.2",
     "next": "14.2.4",
@@ -22,7 +23,8 @@
     "react-scroll-to-top": "^3.0.0",
     "react-select": "^5.8.0",
     "react-select-country-list": "^2.2.3",
-    "react-zoom-pan-pinch": "^3.4.4"
+    "react-zoom-pan-pinch": "^3.4.4",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -239,69 +239,126 @@
 // }
 
 // export default CheckoutSection;
-"use client";
 
-import Button from "../Button/Button";
+/////--------------------------------------------------------------
+
+"use client";
 import OrderSummery from "../OrderSummery/OrderSummery";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import React, { useState, useMemo, useEffect } from "react";
+import Select, { SingleValue } from "react-select";
 
-import React, { useState, useMemo } from "react";
-import Select, { SingleValue, StylesConfig } from "react-select";
 import countryList from "react-select-country-list";
 
+const schema = yup.object().shape({
+  name: yup
+    .string()
+    .required("Name cannot be empty")
+    .matches(/^[A-Za-z]+$/, "Letters only"),
+  lastName: yup
+    .string()
+    .required("Last name cannot be empty")
+    .matches(/^[A-Za-z]+$/, "Letters only"),
+  street: yup.string().required("Street cannot be empty"),
+  zip: yup.string().required("ZIP Code cannot be empty"),
+  email: yup.string().required().email(),
+  phone: yup
+    .string()
+    .required("Phone Number cannot be empty")
+    .matches(/^\+\d+$/, "+ & Numbers only {+111111111}")
+    .min(9, "Min Length 9"),
+});
 
 type userInfoDataType = {
-  company: string;
+  company?: string;
   email: string;
   lastName: string;
   name: string;
   phone: string;
-  state: string;
+  state?: string;
   street: string;
   zip: string;
-  country: string;
+  country?: string;
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function CheckoutSection() {
-  const { register, handleSubmit } = useForm<userInfoDataType>();
-  const [value, setValue] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<userInfoDataType>({
+    resolver: yupResolver(schema),
+  });
+
+  // const [value, setValue] = useState("");
   const options = useMemo(() => countryList().getData(), []);
+  const [registerData, setRegisterData] = useState(false);
+
+  const [value, setValue] = useState<string | undefined>("");
+  const [countryError, setCountryError] = useState<boolean>();
+
   const [selectedCountry, setSelectedCountry] =
     useState<SingleValue<{ value: string; label: string }>>(null);
 
-    const changeHandler = (
-      value: SingleValue<{ value: string; label: string }>
-    ) => {
-      setSelectedCountry(value);
-    };
-
-    const onSubmit = (data: userInfoDataType) => {
-      data.country = selectedCountry?.value || "";
-      console.log(data);
-    };
+  const changeHandler = (
+    value: SingleValue<{ value: string; label: string }>
+  ) => {
+    setSelectedCountry(value);
+    setValue(value?.label as string);
+  };
 
   // const onSubmit = (data: userInfoDataType) => {
-  //   console.log(data);
+  //   for (let key in data) {
+  //     if (typeof data[key] === 'string' && data[key].trim() === '') {
+  //       setRegisterData(true);
+  //       break;
+  //     }
+  //   }
   // };
+
+  // const onSubmit = (data: userInfoDataType) => {
+  //   const updatedData = {
+  //     ...data,
+  //     country: selectedCountry?.label,
+  //     state: selectedCountry?.value,
+  //   };
+
+  //   for (let key in updatedData) {
+  //     if (key.length !== 0) {
+  //       setRegisterData(true);
+  //       setValue(updatedData.country);
+  //       setCountryError(false);
+  //     } else if(key.length === 0){
+  //       setCountryError(true);
+  //     }
+
+  //   }
+
+  //   console.log(updatedData, "updatedData");
+  // };
+  
+  
+  // let updetedData: userInfoDataType;
+  const onSubmit = (data: userInfoDataType) => {
+    const updatedData: userInfoDataType = {
+      ...data,
+      country: selectedCountry?.label,
+      state: selectedCountry?.value,
+    };
+
+    for (let key in updatedData) {
+      if (key.length !== 0) {
+        setRegisterData(true)
+      } 
+    }
+  };
+
+  console.log(value, "value");
+  console.log(selectedCountry, "selectedCountry");
+  console.log(countryError, "countryError");
+  console.log(registerData, "registerData");
 
   return (
     <div className=" w-full flex flex-col gap-[30px] flex-grow items-start  mt-8 mb-10 md:gap-[1%] md:flex-row">
@@ -317,7 +374,7 @@ function CheckoutSection() {
           <div className="flex flex-col  w-full md:w-[70%]">
             <div className="w-full flex flex-col gap-4 border-b border-b-[#e1dfdf] pb-[20px] ">
               <div className="w-full flex flex-col space-y-2 md:space-y-0 md:flex-row items-center md:gap-[1%] text-xs lg:text-sm">
-                <div className="w-full flex flex-col md:w-[33%] gap-y-1 ">
+                <div className="w-full flex flex-col md:w-[33%] gap-y-1 relative">
                   <label className="" htmlFor="">
                     First name
                   </label>
@@ -327,9 +384,14 @@ function CheckoutSection() {
                     type="text"
                     {...register("name")}
                   />
+                  {errors.name && (
+                    <span className="text-red-600 text-[9px] absolute left-0 bottom-[-17px]">
+                      {errors.name.message}
+                    </span>
+                  )}
                 </div>
 
-                <div className="w-full flex flex-col md:w-[33%] gap-y-1">
+                <div className="w-full flex flex-col md:w-[33%] gap-y-1 relative">
                   <label htmlFor="">Last name</label>
                   <input
                     className="border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
@@ -337,9 +399,14 @@ function CheckoutSection() {
                     type="text"
                     {...register("lastName")}
                   />
+                  {errors.lastName && (
+                    <span className="text-red-600 text-[9px] absolute left-0 bottom-[-17px]">
+                      {errors.lastName.message}
+                    </span>
+                  )}
                 </div>
 
-                <div className="w-full flex flex-col md:w-[33%] gap-y-1">
+                <div className="w-full flex flex-col md:w-[33%] gap-y-1 relative">
                   <label htmlFor="">Company Name (optional)</label>
                   <input
                     className="border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
@@ -347,73 +414,84 @@ function CheckoutSection() {
                     type="text"
                     {...register("company")}
                   />
+                  {errors.company && (
+                    <span className="text-red-600 text-[9px] absolute left-0 bottom-[-17px]">
+                      {errors.company.message}
+                    </span>
+                  )}
                 </div>
               </div>
 
               <div>
-                <div className="w-full flex flex-col gap-y-1 text-xs lg:text-sm">
+                <div className="w-full flex flex-col gap-y-1 text-xs lg:text-sm relative">
                   <label htmlFor="">Street Address</label>
                   <input
-                  
                     className="border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
                     placeholder="Street Address"
                     type="text"
                     {...register("street")}
                   />
+                  {errors.street && (
+                    <span className="text-red-600 text-[9px] absolute left-0 bottom-[-17px]">
+                      {errors.street.message}
+                    </span>
+                  )}
                 </div>
               </div>
 
-
-
-
               <div className="w-full flex space-y-2 md:space-y-0 flex-col md:flex-row  items-center md:gap-[1%] text-xs lg:text-sm">
-
-                
-                <div className="w-full flex flex-col md:w-[33%] gap-y-1">
+                <div className="w-full flex flex-col md:w-[33%] gap-y-1 relative">
                   <label htmlFor="">Country / Region</label>
 
                   <div className="border border-[#e1dfdf] py-[5px] rounded-md bg-transparent">
-                  <Select
-                   styles={{
-                    control: (provided, state) => ({
-                      ...provided,
-                      border: "none",
-                      boxShadow: "none",
-                      background: 'transparent'
-                      // paddingTop: '8px',
-                      // paddingBottom: '8px'
-                    })
-                  }}
-                    options={options}
-                    value={selectedCountry}
-                    onChange={changeHandler}
-                    className="border-none  "
-                    // {...register('country')}
-                  />
+                    <Select
+                      styles={{
+                        control: (provided, state) => ({
+                          ...provided,
+                          border: "none",
+                          boxShadow: "none",
+                          background: "transparent",
+                          // paddingTop: '8px',
+                          // paddingBottom: '8px'
+                        }),
+                      }}
+                      options={options}
+                      value={selectedCountry}
+                      onChange={changeHandler}
+                      className="border-none  "
+                      // {...register('country')}
+                    />
+                    {/* {value === ''  && (
+                      <span className="text-red-600 text-[9px] absolute left-0 bottom-[-17px]">
+                        Country cannot be empty
+                      </span>
+                    )} */}
 
-
+                    {registerData === false && selectedCountry !== null && (
+                      <span className="text-red-600 text-[9px] absolute left-0 bottom-[-17px]">
+                        Country cannot be empty
+                      </span>
+                    )}
                   </div>
-                
-                  {/* <Select options={options} value={value} onChange={changeHandler} className="border-none"/> */}
-
-                  {/* <input
-                    className=" border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
-                    type="text"
-                    placeholder="Country / Region"
-                  /> */}
                 </div>
 
-                <div className="w-full flex flex-col md:w-[33%] gap-y-1">
+                <div className="w-full flex flex-col md:w-[33%] gap-y-1 relative">
                   <label htmlFor="">States</label>
                   <input
                     className="border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
                     type="text"
                     placeholder="States"
                     {...register("state")}
+                    defaultValue={selectedCountry ? selectedCountry.value : ""}
                   />
+                  {/* {value === "" && (
+                    <span className="text-red-600 text-[9px] absolute left-0 bottom-[-17px]">
+                      Country cannot be empty
+                    </span>
+                  )} */}
                 </div>
 
-                <div className="w-full flex flex-col md:w-[33%] gap-y-1">
+                <div className="w-full flex flex-col md:w-[33%] gap-y-1 relative">
                   <label htmlFor="">Zip Code</label>
                   <input
                     className="border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
@@ -421,11 +499,16 @@ function CheckoutSection() {
                     type="text"
                     {...register("zip")}
                   />
+                  {errors.zip && (
+                    <span className="text-red-600 text-[9px] absolute left-0 bottom-[-17px]">
+                      {errors.zip.message}
+                    </span>
+                  )}
                 </div>
               </div>
 
               <div className="w-full flex flex-col space-y-2 md:space-y-0 md:flex-row  items-center justify-between md:gap-[1%] text-xs lg:text-sm">
-                <div className="w-full flex flex-col md:w-[50%] gap-y-1">
+                <div className="w-full flex flex-col md:w-[50%] gap-y-1 relative">
                   <label className="" htmlFor="">
                     Email
                   </label>
@@ -435,9 +518,14 @@ function CheckoutSection() {
                     type="text"
                     {...register("email")}
                   />
+                  {errors.email && (
+                    <span className="text-red-600 text-[9px] absolute left-0 bottom-[-17px]">
+                      {errors.email.message}
+                    </span>
+                  )}
                 </div>
 
-                <div className="w-full flex flex-col md:w-[50%] gap-y-1">
+                <div className="w-full flex flex-col md:w-[50%] gap-y-1 relative">
                   <label htmlFor="">Phone</label>
                   <input
                     className="border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
@@ -445,6 +533,11 @@ function CheckoutSection() {
                     type="text"
                     {...register("phone")}
                   />
+                  {errors.phone && (
+                    <span className="text-red-600 text-[9px] absolute left-0 bottom-[-17px]">
+                      {errors.phone.message}
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -476,23 +569,6 @@ function CheckoutSection() {
             <OrderSummery />
           </div>
         </form>
-
-        {/* <div className=" flex flex-col gap-[10px] pt-[20px] ">
-          <h2 className="font-bold tracking-wide text-green-950 text-[18px]">
-            Additional Info
-          </h2>
-          <div>
-            <label htmlFor="" className="text-xs lg:text-sm">
-              Order Notes (Optional)
-            </label>
-            <textarea
-              name=""
-              id=""
-              placeholder="Notes about your order, e.g. special notes for delivery"
-              className="w-full border border-[#e1dfdf] rounded-md text-xs p-2 lg:text-sm"
-            ></textarea>
-          </div>
-        </div> */}
       </div>
     </div>
   );
@@ -504,3 +580,5 @@ function setSelectedCountry(
 ) {
   throw new Error("Function not implemented.");
 }
+
+/////--------------------------------------------------------------
