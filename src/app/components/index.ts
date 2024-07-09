@@ -12,7 +12,7 @@ export { default as CartItem } from './CartItem/CartItem'
 export { default as Coupon } from './Coupon/Coupon'
 export { default as CheckoutSection } from './CheckoutSection/CheckoutSection'
 export { default as Register } from './Register/Register'
-export { default as FavoriteSection } from './FavoritesSection/FavoritesSection'
+export { default as FavoritesSection } from './FavoritesSection/FavoritesSection'
 export { default as Filter } from './Filter/Filter'
 export { default as Scroll } from './Scroll/Scroll'
 export { default as Overlay } from './Overlay/Overlay'
@@ -25,6 +25,7 @@ export { default as SecondaryButton } from './SecondaryButton/SecondaryButton'
 export { default as Video } from './Video/Video'
 export { default as SalesSection} from './SalesSection/SalesSection'
 export { default as ImageSlider} from './ImageSlider/ImageSlider'
+export { default as OrderSection} from './OrderSection/OrderSection'
 
 
 

@@ -247,10 +247,12 @@ import OrderSummery from "../OrderSummery/OrderSummery";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useContext } from "react";
 import Select, { SingleValue } from "react-select";
 
 import countryList from "react-select-country-list";
+import { useRouter } from "next/navigation";
+import { ClobalContext } from "@/app/context/Context";
 
 const schema = yup.object().shape({
   name: yup
@@ -284,6 +286,7 @@ type userInfoDataType = {
 };
 
 function CheckoutSection() {
+
   const {
     register,
     handleSubmit,
@@ -291,16 +294,28 @@ function CheckoutSection() {
   } = useForm<userInfoDataType>({
     resolver: yupResolver(schema),
   });
-
+  const router = useRouter();
   // const [value, setValue] = useState("");
   const options = useMemo(() => countryList().getData(), []);
   const [registerData, setRegisterData] = useState(false);
-
   const [value, setValue] = useState<string | undefined>("");
-  const [countryError, setCountryError] = useState<boolean>();
+  // const [countryError, setCountryError] = useState<boolean>();
 
   const [selectedCountry, setSelectedCountry] =
     useState<SingleValue<{ value: string; label: string }>>(null);
+    const context = useContext(ClobalContext);
+    if (!context) return;
+    const {
+      shoppingCartItems,
+      totalPrice,
+      totalCount,
+      setShoppingCartItems,
+      handleRadioChange,
+      isRadioChecked
+    } = context;
+
+    
+    console.log(isRadioChecked, 'isRadioChecked')
 
   const changeHandler = (
     value: SingleValue<{ value: string; label: string }>
@@ -309,38 +324,6 @@ function CheckoutSection() {
     setValue(value?.label as string);
   };
 
-  // const onSubmit = (data: userInfoDataType) => {
-  //   for (let key in data) {
-  //     if (typeof data[key] === 'string' && data[key].trim() === '') {
-  //       setRegisterData(true);
-  //       break;
-  //     }
-  //   }
-  // };
-
-  // const onSubmit = (data: userInfoDataType) => {
-  //   const updatedData = {
-  //     ...data,
-  //     country: selectedCountry?.label,
-  //     state: selectedCountry?.value,
-  //   };
-
-  //   for (let key in updatedData) {
-  //     if (key.length !== 0) {
-  //       setRegisterData(true);
-  //       setValue(updatedData.country);
-  //       setCountryError(false);
-  //     } else if(key.length === 0){
-  //       setCountryError(true);
-  //     }
-
-  //   }
-
-  //   console.log(updatedData, "updatedData");
-  // };
-  
-  
-  // let updetedData: userInfoDataType;
   const onSubmit = (data: userInfoDataType) => {
     const updatedData: userInfoDataType = {
       ...data,
@@ -350,14 +333,16 @@ function CheckoutSection() {
 
     for (let key in updatedData) {
       if (key.length !== 0) {
-        setRegisterData(true)
-      } 
+        setRegisterData(true);
+        router.push('./order')
+      }
     }
+    console.log(updatedData, "updatedData");
   };
 
   console.log(value, "value");
   console.log(selectedCountry, "selectedCountry");
-  console.log(countryError, "countryError");
+
   console.log(registerData, "registerData");
 
   return (

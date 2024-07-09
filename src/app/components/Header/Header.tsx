@@ -11,7 +11,7 @@ const Header = () => {
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-screen-xl w-full flex flex-col items-start gap-4 px-[3%] lg:px-[7%] z-10">
         <div className="flex flex-row items-center gap-4">
           <LeafIcon />
-          <EcobazarIcon location={'header'} />
+          <EcobazarIcon location={"header"} />
         </div>
 
         <div className="flex flex-row space-x-2 items-center">
@@ -23,18 +23,24 @@ const Header = () => {
         </div>
       </div>
 
-      <div className="absolute w-full h-[50vh]  bg-gradient-to-t from-gray-100 to-transparent bottom-0 z-20" />
-      <Carousel
-        autoPlay
-        infiniteLoop
-        showStatus={false}
-        showIndicators={false}
-        showThumbs={false}
-        interval={5000}
-        transitionTime={1000}
-      >
+      <div className="absolute w-full h-[50vh] bg-gradient-to-t from-gray-100 to-transparent bottom-0 z-20" />
+        <Carousel
+          autoPlay
+          infiniteLoop
+          showStatus={false}
+          showIndicators={false}
+          showThumbs={false}
+          interval={5000}
+          transitionTime={1000}
+        >
         <div>
-          <Image src="/assets/b1.jpg" alt={""}  className="h-[50vh] object-cover" width={500} height={500} />
+          <Image
+            src="/assets/b1.jpg"
+            alt={""}
+            className="h-[50vh] object-cover"
+            width={500}
+            height={500}
+          />
 
           {/* <img
             loading="lazy"
@@ -45,8 +51,13 @@ const Header = () => {
         </div>
 
         <div>
-
-        <Image src="/assets/b2.jpg" alt={""}  className="h-[50vh] object-cover" width={500} height={500}  />
+          <Image
+            src="/assets/b2.jpg"
+            alt={""}
+            className="h-[50vh] object-cover"
+            width={500}
+            height={500}
+          />
           {/* <img
             loading="lazy"
             className="h-[50vh] object-cover"
@@ -56,7 +67,13 @@ const Header = () => {
         </div>
 
         <div>
-        <Image src="/assets/b3.jpg" alt={""}  className="h-[50vh] object-cover" width={500} height={500}  />
+          <Image
+            src="/assets/b3.jpg"
+            alt={""}
+            className="h-[50vh] object-cover"
+            width={500}
+            height={500}
+          />
           {/* <img
             loading="lazy"
             className="h-[50vh] object-cover"
@@ -66,7 +83,13 @@ const Header = () => {
         </div>
 
         <div>
-        <Image src="/assets/b4.jpg" alt={""}  className="h-[50vh] object-cover" width={500} height={500}  />
+          <Image
+            src="/assets/b4.jpg"
+            alt={""}
+            className="h-[50vh] object-cover"
+            width={500}
+            height={500}
+          />
           {/* <img
             loading="lazy"
             className="h-[50vh] object-cover"

@@ -1,5 +1,5 @@
-import { Hero, Intro, Nav } from '@/app/components'
-import FavoritesSection from '@/app/components/FavoritesSection/FavoritesSection'
+import { Hero, Intro, Nav, FavoritesSection } from '@/app/components'
+// import FavoritesSection from '@/app/components/FavoritesSection/FavoritesSection'
 import React from 'react'
 
 export default function page() {
