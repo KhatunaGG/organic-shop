@@ -34,7 +34,7 @@ const Nav = () => {
           </Link>
         )}
 
-        <Link href={`pages/favorites`}>
+        <Link href={'pages/favorites'}>
           <span>Favorites</span>
         </Link>
         <Link href={`/pages/shoppingcart`}>

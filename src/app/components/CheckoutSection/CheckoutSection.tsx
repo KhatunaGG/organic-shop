@@ -332,7 +332,7 @@ function CheckoutSection() {
     };
 
     for (let key in updatedData) {
-      if (key.length !== 0) {
+      if (key.length !== 0 && isRadioChecked !== null) {
         setRegisterData(true);
         router.push('./order')
       }

@@ -15,9 +15,7 @@ const OrderSummery = () => {
     handleRadioChange,
     isRadioChecked
   } = context;
-  // console.log(shoppingCartItems, "shoppingCartItems");
-  // console.log(totalCount, "totlacount");
-  // console.log(totalPrice, "totlaprice");
+
 
   return (
     <div className="right-side w-full  border border-[#e1dfdf] shadow-md rounded-md p-6 flex flex-col gap-4 ">
@@ -26,7 +24,7 @@ const OrderSummery = () => {
       </h2>
 
       {shoppingCartItems.map((item, i) => (
-        <div key={i} className="flex flex-col items-start gap-2">
+        <div key={i} className="flex flex-col items-start gap-2 border border-slate-300 px-2 rounded-lg">
           <div className="w-full flex flex-row items-center justify-between">
             <Image src={item.image} alt={""} width={50} height={50} />
             {/* <img className="w-[50px] h-[50px]" src="" alt="" /> */}
@@ -39,7 +37,7 @@ const OrderSummery = () => {
       <div className="w-full flex-col items-center ">
         <div className="flex flex-row items-center justify-between py-[12px] border-b border-b-[#e1dfdf] ">
           <div>Subtotal:</div>
-          <div>$ {shoppingCartItems.length > 0 ? totalPrice : "0.00"}</div>
+          <div>$ {shoppingCartItems.length > 0 ? totalPrice.toFixed(2) : "0.00"}</div>
         </div>
 
         <div className="flex flex-row items-center justify-between py-[12px] border-b border-b-[#e1dfdf] ">
