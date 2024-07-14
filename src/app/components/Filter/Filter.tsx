@@ -79,20 +79,24 @@
 
 "use client";
 import { ClobalContext } from "@/app/context/Context";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FilterIcon, FreeIcon } from "../_atoms";
-
 import Slider from "@mui/material/Slider";
-// import Deals from "../Deals/Deals";
-// import Video from "../Video/Video";
-// import ImageSlider from "../ImageSlider/ImageSlider";
 import { Deals, Video, ImageSlider } from "@/app/components";
 
 function Filter() {
   const context = useContext(ClobalContext);
   if (!context) return;
-  const { data, categoryArray, checked, handleFilter, value, setValue } =
-    context;
+  const {
+    data,
+    categoryArray,
+    checked,
+    handleFilter,
+    value,
+    setValue,
+    setLength,
+    length,
+  } = context;
   const price_range = [0, 20];
 
   const handleChange = (_event: Event, newValue: number | number[]) => {
@@ -106,7 +110,7 @@ function Filter() {
   return (
     <div className="hidden w-[25%] md:flex flex-col items-start gap-4">
       <h2 className="text-gray-400 w-full text-right">
-        {data.length} Results Found
+        {length} Results Found
       </h2>
 
       <div className="flex flex-col gap-6">
@@ -131,7 +135,6 @@ function Filter() {
                   className="rounded-full w-3 h-3 text-green-600 focus:ring-green-600"
                 />
                 <label
-
                   className="cursor-pointer hover:cursor-pointer text-green-900"
                   // onClick={() => handleFilter(i, item.toLowerCase())}
                 >
@@ -161,7 +164,9 @@ function Filter() {
 
       <div className="w-full bg-green-200 text-green-950 flex items-center p-4 rounded-lg mt-6 gap-2 shadow-lg">
         <FreeIcon />
-        <p className="font-medium">Free Shipping over <span className="font-bold">$50.00</span></p>
+        <p className="font-medium">
+          Free Shipping over <span className="font-bold">$50.00</span>
+        </p>
       </div>
       <Video />
       <ImageSlider data={data} />

@@ -1,11 +1,16 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { HomeIcon, EcobazarIcon, LeafIcon, ArrowRIcon } from "../_atoms";
 import Image from "next/image";
+import { ClobalContext } from "@/app/context/Context";
 
 const Header = () => {
+  const context = useContext(ClobalContext);
+  if (!context) return;
+  const { checked } = context;
+    
   return (
     <div className="relative">
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-screen-xl w-full flex flex-col items-start gap-4 px-[3%] lg:px-[7%] z-10">
@@ -17,9 +22,9 @@ const Header = () => {
         <div className="flex flex-row space-x-2 items-center">
           <HomeIcon />
           <ArrowRIcon />
-          <p className="text-gray-800 text-xs">Category</p>
+          <p className="text-gray-800 text-sm">Category</p>
           <ArrowRIcon />
-          <p className="text-xs text-red-700 font-bold">Vegetables</p>
+          <p className="text-md text-red-700 font-bold">{checked ? checked : 'All'}</p>
         </div>
       </div>
 

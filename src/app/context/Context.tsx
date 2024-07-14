@@ -31,7 +31,7 @@ export type GlobalStateType = {
   handleSearch: (e: React.FormEvent<HTMLFormElement>) => void;
   search: string;
   length: number;
-
+  setLength:  React.Dispatch<React.SetStateAction<number>>;
   setButtonInnerText: React.Dispatch<React.SetStateAction<string>>;
   setOverlay: React.Dispatch<React.SetStateAction<string>>;
   overlay: string;
@@ -41,7 +41,7 @@ export type GlobalStateType = {
   handleChange: (value: string) => void;
   isChecked: string;
   setIsChecked: React.Dispatch<React.SetStateAction<string>>;
-  // setIsCurrentUser:  React.Dispatch<React.SetStateAction<string>>
+
   handleRadioChange: (value: string) => void;
   isRadioChecked: string | null;
 };
@@ -82,13 +82,38 @@ const Context = ({ children }: { children: React.ReactNode }) => {
   const [overlay, setOverlay] = useState("");
 
   const [length, setLength] = useState(data.length);
+  // const [length, setLength] = useState(0);
   const [loggedInUser, setLoggedInUser] = useState("");
 
   const [isChecked, setIsChecked] = useState("");
   const [isRadioChecked, setIsRadioChecked] = useState<string | null >(null)
+  const [category, setCategory] = useState(checked)
+
+  console.log(checked, 'checked')
 
 
-  // console.log(loggedInUser, 'loggedInUser')
+
+
+
+
+  useEffect(() => {
+    setLength(data.length)
+    if(value) {
+      setLength(data.filter((item) => item.price >= value[0] && item.price <= value[1]).length)
+    }
+  }, [data, value])
+
+  console.log(length, 'length from contect')
+
+  // useEffect(() => {
+  //   setLength(data.filter((item) => item.price >= value[0] && item.price <= value[1]).length)
+  // }, [value])
+
+
+
+
+
+
 
 
   const handleRadioChange =  (pay: string) => {
@@ -150,10 +175,6 @@ const Context = ({ children }: { children: React.ReactNode }) => {
       );
     }
   };
-
-
-
-
 
 
   const getInputSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -232,17 +253,6 @@ const Context = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
-  // const decrement = (countMinusId: number) => {
-  //   setShoppingCartItems((prevItems) =>
-  //     prevItems.map((item) =>
-  //       item.id === countMinusId
-  //         ? { ...item, count: Math.max(0, (item.count || 0) - 1) }
-  //         : item
-  //     )
-  //   );
-  // };
-
-
 
   const decrement = (countMinusId: number) => {
     setShoppingCartItems((prevItems) =>
@@ -253,10 +263,6 @@ const Context = ({ children }: { children: React.ReactNode }) => {
       )
     );
   };
-
-
-
-
 
 
 
@@ -301,9 +307,10 @@ const Context = ({ children }: { children: React.ReactNode }) => {
         handleChange,
         isChecked,
         setIsChecked,
-        // setIsCurrentUser
+        setLength,
         handleRadioChange,
-        isRadioChecked
+        isRadioChecked,
+     
       }}
     >
       {children}

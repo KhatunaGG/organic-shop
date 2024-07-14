@@ -84,7 +84,6 @@
 
 // export default OrderSection;
 
-
 "use client";
 import Image from "next/image";
 import React, { useContext, useState } from "react";
@@ -95,7 +94,7 @@ import { useRouter } from "next/navigation";
 const OrderSection = () => {
   const [show, setShow] = useState(false);
   const [arrLength, setArrLengh] = useState(1);
-  const router = useRouter()
+  const router = useRouter();
   const context = useContext(ClobalContext);
   if (!context) return;
   const {
@@ -105,10 +104,10 @@ const OrderSection = () => {
     setShoppingCartItems,
     handleRadioChange,
     isRadioChecked,
-    setTotalPrice
+    setTotalPrice,
   } = context;
 
-  console.log(shoppingCartItems, 'shoppingCartItems')
+  console.log(shoppingCartItems, "shoppingCartItems");
 
   return (
     <div className="w-full flex items-center justify-center min-h-[calc(100vh-8vh)] py-8  md:py-0">
@@ -144,7 +143,11 @@ const OrderSection = () => {
             }}
             className="text-xs flex items-center justify-center"
           >
-            {arrLength === 1 ? `and ${shoppingCartItems.length ? shoppingCartItems.length - 1 : 0} other item(s)` : 'View less'}
+            {arrLength === 1
+              ? `and ${
+                  shoppingCartItems.length ? shoppingCartItems.length - 1 : 0
+                } other item(s)`
+              : "View less"}
           </button>
         </div>
 
@@ -162,15 +165,30 @@ const OrderSection = () => {
 
           <div className="w-full h-full bg-black space-y-4 flex flex-col items-center justify-between">
             <span className="font-bold text-white">
-              Total: <span className="font-bold text-red-500 text-lg"> $ {totalPrice.toFixed(2)}</span>{" "}
+              {/* Total: <span className="font-bold text-red-500 text-lg"> $ {totalPrice.toFixed(2)}</span>{" "} */}
+              Total:{" "}
+              <span className="font-bold text-red-500 text-lg">
+                ${" "}
+                {shoppingCartItems.length > 0
+                  ? totalPrice <= 50.0
+                    ? (totalPrice + 3.99).toFixed(2)
+                    : totalPrice.toFixed(2)
+                  : "0.00"}
+              </span>{" "}
             </span>
             <button
-            onClick={() => {
-                router.push('/')
-                setTotalPrice(0)
-                setShoppingCartItems([])
-            }}
-             className="text-white text-xs cursor-pointer">Back to <span className="uppercase font-bold text-green-500 text-xs">Ecobazar</span></button>
+              onClick={() => {
+                router.push("/");
+                setTotalPrice(0);
+                setShoppingCartItems([]);
+              }}
+              className="text-white text-xs cursor-pointer"
+            >
+              Back to{" "}
+              <span className="uppercase font-bold text-green-500 text-xs">
+                Ecobazar
+              </span>
+            </button>
           </div>
         </div>
       </div>

@@ -286,7 +286,6 @@ type userInfoDataType = {
 };
 
 function CheckoutSection() {
-
   const {
     register,
     handleSubmit,
@@ -295,27 +294,22 @@ function CheckoutSection() {
     resolver: yupResolver(schema),
   });
   const router = useRouter();
-  // const [value, setValue] = useState("");
   const options = useMemo(() => countryList().getData(), []);
   const [registerData, setRegisterData] = useState(false);
   const [value, setValue] = useState<string | undefined>("");
-  // const [countryError, setCountryError] = useState<boolean>();
 
   const [selectedCountry, setSelectedCountry] =
     useState<SingleValue<{ value: string; label: string }>>(null);
-    const context = useContext(ClobalContext);
-    if (!context) return;
-    const {
-      shoppingCartItems,
-      totalPrice,
-      totalCount,
-      setShoppingCartItems,
-      handleRadioChange,
-      isRadioChecked
-    } = context;
-
-    
-    console.log(isRadioChecked, 'isRadioChecked')
+  const context = useContext(ClobalContext);
+  if (!context) return;
+  const {
+    shoppingCartItems,
+    totalPrice,
+    totalCount,
+    setShoppingCartItems,
+    handleRadioChange,
+    isRadioChecked,
+  } = context;
 
   const changeHandler = (
     value: SingleValue<{ value: string; label: string }>
@@ -334,16 +328,22 @@ function CheckoutSection() {
     for (let key in updatedData) {
       if (key.length !== 0 && isRadioChecked !== null) {
         setRegisterData(true);
-        router.push('./order')
+        router.push("./order");
       }
     }
     console.log(updatedData, "updatedData");
+
+    const invoice = {
+      "Billing Information": updatedData,
+      "Payment Method": isRadioChecked,
+      order: shoppingCartItems,
+      totalPrice: totalPrice,
+    };
+    console.log(invoice, 'invoice')
   };
 
-  console.log(value, "value");
-  console.log(selectedCountry, "selectedCountry");
+  console.log(shoppingCartItems, "shoppingCartItems");
 
-  console.log(registerData, "registerData");
 
   return (
     <div className=" w-full flex flex-col gap-[30px] flex-grow items-start  mt-8 mb-10 md:gap-[1%] md:flex-row">

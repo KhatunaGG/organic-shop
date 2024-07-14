@@ -23,11 +23,6 @@ const Products = () => {
         ))}
         <Image src="/assets/Breadcrumbs.png" alt={""} width={800} height={150} className="col-span-full shadow-md h-[15vh] mt-10 mb-10" />
 
-        {/* <img
-          src="/assets/Breadcrumbs.png"
-          alt=""
-          className="col-span-full shadow-md h-[15vh] mt-10 mb-10"
-        /> */}
 
         <div className="md:col-span-2">
           {data.filter((item) => item.price >= value[0] && item.price <= value[1]).slice(6, 7).map((item, i) => (
