@@ -1,8 +1,10 @@
 "use client";
 import React, { createContext, useEffect, useState } from "react";
 import datajson from "../data/data.json";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase/config";
+// import { useAuthState } from "react-firebase-hooks/auth";
+// import { auth } from "../firebase/config";
+import { userInfoDataType } from "../components/CheckoutSection/CheckoutSection";
+import { ArrType } from "../components/OrderSection/OrderSection";
 // import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged } from "firebase/auth";
 // import {auth} from '../firebase/config'
 
@@ -31,7 +33,7 @@ export type GlobalStateType = {
   handleSearch: (e: React.FormEvent<HTMLFormElement>) => void;
   search: string;
   length: number;
-  setLength:  React.Dispatch<React.SetStateAction<number>>;
+  setLength: React.Dispatch<React.SetStateAction<number>>;
   setButtonInnerText: React.Dispatch<React.SetStateAction<string>>;
   setOverlay: React.Dispatch<React.SetStateAction<string>>;
   overlay: string;
@@ -44,6 +46,12 @@ export type GlobalStateType = {
 
   handleRadioChange: (value: string) => void;
   isRadioChecked: string | null;
+
+  info: InfoType | undefined;
+  setInfo: React.Dispatch<React.SetStateAction<InfoType | undefined>>;
+  total: number;
+  // setInvoice: React.Dispatch<React.SetStateAction<IInvoiceType | undefined>>
+
 };
 
 export type RatingType = {
@@ -63,6 +71,24 @@ export type DataType = {
   count?: number;
   sale?: number;
 };
+
+export type InfoType = {
+  "Billing Information": userInfoDataType;
+  "Payment Method": string | null;
+};
+
+// export type InvoiceType = {
+//   info: InfoType,
+//   purchase: ArrType[];
+
+// }
+
+
+// interface IInvoiceType {
+//   info: InfoType,
+//   purchase: ArrType[];
+
+// }
 
 export const typedDataJson = datajson as DataType[];
 export const ClobalContext = createContext<GlobalStateType | null>(null);
@@ -86,43 +112,48 @@ const Context = ({ children }: { children: React.ReactNode }) => {
   const [loggedInUser, setLoggedInUser] = useState("");
 
   const [isChecked, setIsChecked] = useState("");
-  const [isRadioChecked, setIsRadioChecked] = useState<string | null >(null)
-  const [category, setCategory] = useState(checked)
-
-  console.log(checked, 'checked')
-
-
+  const [isRadioChecked, setIsRadioChecked] = useState<string | null>(null);
+  const [category, setCategory] = useState(checked);
+  const [total, setTotal] = useState(0);
+  // const [invoice, setInvoice] = useState<IInvoiceType>();
+  const [info, setInfo] = useState<InfoType>();
 
 
 
 
   useEffect(() => {
-    setLength(data.length)
-    if(value) {
-      setLength(data.filter((item) => item.price >= value[0] && item.price <= value[1]).length)
-    }
-  }, [data, value])
+    const itemTotalPrice = shoppingCartItems.reduce((acc, el) => {
+      const itemPrice = el.sale || el.price;
+      const itemTotal = itemPrice * (el.count || 1); // Use 0 as default if count is undefined
+      return acc + itemTotal;
+    }, 0);
+    setTotal(itemTotalPrice)
+  }, [shoppingCartItems]);
 
-  console.log(length, 'length from contect')
+
+
+
+  useEffect(() => {
+    setLength(data.length);
+    if (value) {
+      setLength(
+        data.filter((item) => item.price >= value[0] && item.price <= value[1])
+          .length
+      );
+    }
+  }, [data, value]);
 
   // useEffect(() => {
   //   setLength(data.filter((item) => item.price >= value[0] && item.price <= value[1]).length)
   // }, [value])
 
-
-
-
-
-
-
-
-  const handleRadioChange =  (pay: string) => {
-    if(isRadioChecked === pay) {
-        setIsRadioChecked(null)
+  const handleRadioChange = (pay: string) => {
+    if (isRadioChecked === pay) {
+      setIsRadioChecked(null);
     } else {
-      setIsRadioChecked(pay)
+      setIsRadioChecked(pay);
     }
-  }
+  };
 
   const handleChange = (path: string) => {
     if (isChecked === path) {
@@ -137,32 +168,9 @@ const Context = ({ children }: { children: React.ReactNode }) => {
     setCategoryArray(Array.from(categorySet));
   }, [data]);
 
-  // const handleFilter = (index: number, categoryitem: string) => {
 
-  //   console.log(index, 'index')
-  //   console.log(categoryitem, 'categoryitem')
-  //   if (checked === index) {
-  //     setChecked(null);
-  //     setData(typedDataJson);
-  //   } else {
-  //     setChecked(index);
-  //     setData(
-  //       typedDataJson.filter(
-  //         (item) => item.category.toLowerCase() === categoryitem
-  //       )
-  //     );
-  //   }
-  // };
-
-
-
-
-
-
-
-  const handleFilter = ( categoryitem: string) => {
-
-    console.log(categoryitem, 'categoryitem')
+  const handleFilter = (categoryitem: string) => {
+    console.log(categoryitem, "categoryitem");
     if (checked === categoryitem) {
       setChecked(null);
       setData(typedDataJson);
@@ -175,7 +183,6 @@ const Context = ({ children }: { children: React.ReactNode }) => {
       );
     }
   };
-
 
   const getInputSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -253,7 +260,6 @@ const Context = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
-
   const decrement = (countMinusId: number) => {
     setShoppingCartItems((prevItems) =>
       prevItems.map((item) =>
@@ -263,9 +269,6 @@ const Context = ({ children }: { children: React.ReactNode }) => {
       )
     );
   };
-
-
-
 
   const removeCartItem = (removeId: number) => {
     const updatedShoppingCart = shoppingCartItems.filter(
@@ -310,7 +313,10 @@ const Context = ({ children }: { children: React.ReactNode }) => {
         setLength,
         handleRadioChange,
         isRadioChecked,
-     
+        setInfo,
+        info,
+        total,
+        // setInvoice
       }}
     >
       {children}

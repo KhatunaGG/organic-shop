@@ -13,7 +13,7 @@ import SignSection from "../SignSection/SignSection";
 const Intro = () => {
   const context = useContext(ClobalContext);
   if (!context) return null;
-  const { totalPrice, totalCount, favorites, loggedInUser } = context;
+  const { shoppingCartItems, totalCount, favorites, loggedInUser, total } = context;
 
   //   const [currentUser] = useAuthState(auth);
   //   let userSession = null
@@ -46,14 +46,22 @@ const Intro = () => {
               </div>
             </div>
 
-            <div className="flex flex-row space-x-2 items-center  whitespace-nowrap">
+
+            {shoppingCartItems.length > 0 && (
+
+               <div className="flex flex-row space-x-2 items-center  whitespace-nowrap">
               <p className="text-[14px] text-[#898787] text-sm">
                 Shopping cart:
               </p>
               <p className="text-[13px] text-[#898787] font-bold text-base  ">
-                $ {totalPrice ? totalPrice.toFixed(2) : 0.0}
+                
+                $ {total ? total.toFixed(2) : 0.00}
               </p>
             </div>
+            )}
+           
+
+
           </div>
 
           <SignSection />

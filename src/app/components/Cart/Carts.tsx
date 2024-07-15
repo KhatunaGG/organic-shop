@@ -10,7 +10,14 @@ const Carts = () => {
   const context = useContext(ClobalContext);
   if (!context) return;
   const { shoppingCartItems, totalPrice, totalCount, setShoppingCartItems } = context;
-  console.log(shoppingCartItems)
+
+
+  // const itemTotalPrice = shoppingCartItems.reduce((acc, el) => {
+  //   const num = el.count
+  //   const itemPrice = el.sale ? el.sale : el.price;
+  //   const itemTotal = itemPrice * el.count ?? 1;
+  //   return acc + itemTotal;
+  // }, 0);
 
   return (
     <div className="flex flex-col flex-grow  gap-6 mb-10 mt-8 items-center w-full ">

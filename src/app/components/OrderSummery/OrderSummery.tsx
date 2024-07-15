@@ -13,7 +13,8 @@ const OrderSummery = () => {
     totalCount,
     setShoppingCartItems,
     handleRadioChange,
-    isRadioChecked
+    isRadioChecked,
+    total
   } = context;
 
 
@@ -29,7 +30,7 @@ const OrderSummery = () => {
             <Image src={item.image} alt={""} width={50} height={50} />
             {/* <img className="w-[50px] h-[50px]" src="" alt="" /> */}
             <p className="inline-block text-xs">{item.title}</p>
-            <p className="inline-block text-xs font-bold">{item.price}</p>
+            <p className="inline-block text-xs font-bold">{item.sale ? item.sale * (item.count || 1) : item.price * (item.count || 1)}</p>
           </div>
         </div>
       ))}
@@ -37,13 +38,13 @@ const OrderSummery = () => {
       <div className="w-full flex-col items-center ">
         <div className="flex flex-row items-center justify-between py-[12px] border-b border-b-[#e1dfdf] ">
           <div>Subtotal:</div>
-          <div>$ {shoppingCartItems.length > 0 ? totalPrice.toFixed(2) : "0.00"}</div>
+          <div>$ {shoppingCartItems.length > 0 ? total.toFixed(2) : "0.00"}</div>
         </div>
 
         <div className="flex flex-row items-center justify-between py-[12px] border-b border-b-[#e1dfdf] ">
           <div>Shipping:</div>
-          <div className={`${totalPrice > 50 && "text-green-700 font-bold"}`}>
-            {totalPrice <= 50.0 ? 3.99 : "Free"}
+          <div className={`${total > 50 && "text-green-700 font-bold"}`}>
+            {total <= 50.0 ? 3.99 : "Free"}
           </div>
         </div>
 
@@ -56,9 +57,9 @@ const OrderSummery = () => {
               : (totalPrice + 0).toFixed(2)} */}
             ${" "}
             {shoppingCartItems.length > 0
-              ? totalPrice <= 50.0
-                ? (totalPrice + 3.99).toFixed(2)
-                : totalPrice.toFixed(2)
+              ? total <= 50.0
+                ? (total + 3.99).toFixed(2)
+                : total.toFixed(2)
               : "0.00"}
           </div>
         </div>

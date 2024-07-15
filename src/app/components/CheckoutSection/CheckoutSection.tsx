@@ -252,7 +252,7 @@ import Select, { SingleValue } from "react-select";
 
 import countryList from "react-select-country-list";
 import { useRouter } from "next/navigation";
-import { ClobalContext } from "@/app/context/Context";
+import { ClobalContext, InfoType } from "@/app/context/Context";
 
 const schema = yup.object().shape({
   name: yup
@@ -273,7 +273,7 @@ const schema = yup.object().shape({
     .min(9, "Min Length 9"),
 });
 
-type userInfoDataType = {
+export type userInfoDataType = {
   company?: string;
   email: string;
   lastName: string;
@@ -309,6 +309,7 @@ function CheckoutSection() {
     setShoppingCartItems,
     handleRadioChange,
     isRadioChecked,
+    setInfo
   } = context;
 
   const changeHandler = (
@@ -318,6 +319,7 @@ function CheckoutSection() {
     setValue(value?.label as string);
   };
 
+ 
   const onSubmit = (data: userInfoDataType) => {
     const updatedData: userInfoDataType = {
       ...data,
@@ -325,24 +327,28 @@ function CheckoutSection() {
       state: selectedCountry?.value,
     };
 
-    for (let key in updatedData) {
-      if (key.length !== 0 && isRadioChecked !== null) {
-        setRegisterData(true);
-        router.push("./order");
-      }
-    }
-    console.log(updatedData, "updatedData");
+    // for (let key in updatedData) {
+    //   if (key.length !== 0 && isRadioChecked !== null) {
+    //     setRegisterData(true);
+    //     router.push("./order");
+    //   }
+    // }
 
-    const invoice = {
+    if (Object.values(updatedData).some(field => field !== "")) {
+      setRegisterData(true);
+      router.push("./order");
+    }
+
+    const info: InfoType = {
       "Billing Information": updatedData,
       "Payment Method": isRadioChecked,
-      order: shoppingCartItems,
-      totalPrice: totalPrice,
+      // order: invoiceItemArr,
+      // totalPrice: totalPrice,
     };
-    console.log(invoice, 'invoice')
+      setInfo(info)
   };
 
-  console.log(shoppingCartItems, "shoppingCartItems");
+  // console.log(shoppingCartItems, "shoppingCartItems");
 
 
   return (
