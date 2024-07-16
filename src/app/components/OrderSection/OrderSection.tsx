@@ -277,8 +277,10 @@ const OrderSection = () => {
   const router = useRouter();
   const context = useContext(ClobalContext);
   if (!context) return null;
-  console.log(invoice, "invoice");
 
+  console.log(invoice, 'invoice from ordersection')
+
+  
   const {
     shoppingCartItems,
     setShoppingCartItems,
@@ -290,8 +292,11 @@ const OrderSection = () => {
   } = context;
 
   useEffect(() => {
-    getInvoice();
+    if (shoppingCartItems && info) {
+      getInvoice();
+    }
   }, [shoppingCartItems, info]);
+
 
   function generateId(): string {
     const now = new Date();
@@ -306,7 +311,6 @@ const OrderSection = () => {
       .padStart(2, "0")}${now.getMilliseconds().toString().padStart(3, "0")}`;
     return id;
   }
-
 
   const getInvoice = () => {
     const arr: ArrType[] = shoppingCartItems.map((item) => ({
@@ -326,6 +330,11 @@ const OrderSection = () => {
 
     setInvoice(newObj);
   };
+
+
+
+
+
 
   return (
     <div className="w-full flex items-center justify-center min-h-[calc(100vh-8vh)] py-8  md:py-0">
