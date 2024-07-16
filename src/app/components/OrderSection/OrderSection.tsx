@@ -457,39 +457,40 @@ const OrderSection = () => {
   const [invoice, setInvoice] = useState({});
   const router = useRouter();
   const context = useContext(ClobalContext);
-  
   if (!context) return null;
 
   const {
     shoppingCartItems,
     setShoppingCartItems,
-    info,
-    total,
+    handleRadioChange,
     setTotalPrice,
+    info,
+    setInfo,
+    total,
   } = context;
 
   useEffect(() => {
-    if (!shoppingCartItems || !info) return;
+    if (shoppingCartItems && info) {
+      const getInvoice = () => {
+        const arr: ArrType[] = shoppingCartItems.map((item) => ({
+          title: item.title,
+          count: item.count ?? 1,
+          price: item.price,
+          total: item.price * (item.count ?? 1),
+        }));
 
-    const getInvoice = () => {
-      const arr: ArrType[] = shoppingCartItems.map((item) => ({
-        title: item.title,
-        count: item.count ?? 1,
-        price: item.price,
-        total: item.price * (item.count ?? 1),
-      }));
+        const newObj = {
+          ...info,
+          purchase: arr,
+          total: total <= 50 ? (total + 3.99).toFixed(2) : total.toFixed(2),
+          id: generateId(),
+        };
 
-      const newObj = {
-        ...info,
-        purchase: arr,
-        total: total <= 50 ? (total + 3.99).toFixed(2) : total.toFixed(2),
-        id: generateId(),
+        setInvoice(newObj);
       };
 
-      setInvoice(newObj);
-    };
-
-    getInvoice();
+      getInvoice();
+    }
   }, [shoppingCartItems, info, total]);
 
   function generateId(): string {
@@ -506,6 +507,7 @@ const OrderSection = () => {
         .padStart(2, "0")}${now.getMilliseconds().toString().padStart(3, "0")}`;
     return id;
   }
+
 
   return (
     <div className="w-full flex items-center justify-center min-h-[calc(100vh-8vh)] py-8  md:py-0">
