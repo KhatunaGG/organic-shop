@@ -1,16 +1,16 @@
 "use client";
 import { ClobalContext } from "@/app/context/Context";
-// import { ClobalContext } from "@/app/context/Context";
-import { auth } from "@/app/firebase/config";
+
+
 import { usePathname, useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
 import { useAuthState, useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 const Login = () => {
-  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [currentUser] = useAuthState(auth);
+
   const router = useRouter();
   const path = usePathname();
   const context = useContext(ClobalContext);
@@ -18,26 +18,7 @@ const Login = () => {
   const { handleChange, isChecked, setIsChecked } = context;
 
 
-console.log(currentUser, 'currentuser')
 
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    try {
-      e.preventDefault();
-      const res = await signInWithEmailAndPassword(email, password);
-      if (res?.user) {
-        sessionStorage.setItem("user", "exist");
-        router.push("/pages/checkout");
-        // setLoggedInUser(res.user.email || "");
-        // setLoggedInUser(currentUser?.email || "");
-      }
-      setEmail("");
-      setPassword("");
-      console.log(res, "response");
-    } catch (er) {
-      console.log(er);
-    }
-  };
 
   return (
     <div className="w-full md:w-[50%] flex flex-col gap-8 p-6 rounded-md shadow-md">
@@ -45,7 +26,7 @@ console.log(currentUser, 'currentuser')
         Sign In
       </h1>
 
-      <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6">
+      <form  className="w-full flex flex-col gap-6">
         <div className="w-full flex flex-col  gap-y-1">
           <label htmlFor="">Email</label>
           <input

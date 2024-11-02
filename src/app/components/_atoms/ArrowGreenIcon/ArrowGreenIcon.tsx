@@ -12,16 +12,16 @@ const ArrowGreenIcon = () => {
       <path
         d="M16 7.50049H1"
         stroke="#00B307"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9.95001 1.47559L16 7.49959L9.95001 13.5246"
         stroke="#00B307"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

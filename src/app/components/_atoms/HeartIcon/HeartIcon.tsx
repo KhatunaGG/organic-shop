@@ -25,7 +25,6 @@ function HeartIcon({ product, width, height }: HeartIconPropsType) {
       <path
         d="M15.999 28.5722C-10.6672 13.8334 7.9995 -2.16662 15.999 7.95079C23.9995 -2.16663 42.6661 13.8334 15.999 28.5722Z"
         stroke="#706d6d"
-        // stroke-width="1.5"
         strokeWidth="1.5"
       />
     </svg>

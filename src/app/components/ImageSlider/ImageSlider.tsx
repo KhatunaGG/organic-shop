@@ -28,6 +28,7 @@ const ImageSlider = ({ data }: ImageSliderPropsType) => {
               alt=""
               fill
               className="object-cover rounded-lg"
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             />
           </div>
         )

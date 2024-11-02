@@ -1,37 +1,16 @@
 "use client";
 import { ClobalContext } from "@/app/context/Context";
-import { auth } from "@/app/firebase/config";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 const Register = () => {
-  const [createUserWithEmailAndPassword] =
-    useCreateUserWithEmailAndPassword(auth);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const router = useRouter();
   const path = usePathname();
   const context = useContext(ClobalContext);
   if (!context) return;
   const { handleChange, isChecked, setIsChecked } = context;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    try {
-      e.preventDefault();
-      const res = await createUserWithEmailAndPassword(email, password);
-
-      if (res?.user) {
-        router.push("/pages/signin");
-      }
-      setPassword("");
-      setEmail("");
-    } catch (er) {
-      const errorMessege = er;
-      console.log(er, "er");
-      console.log(errorMessege, "errorMessege");
-    }
-  };
 
   return (
     <div className="w-full md:w-[50%] flex flex-col gap-8 p-6 rounded-md shadow-md">
@@ -39,15 +18,15 @@ const Register = () => {
         Sign Up
       </h1>
 
-      <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6">
+      <form  className="w-full flex flex-col gap-6">
         <div className="w-full flex flex-col  gap-y-1">
           <label htmlFor="">Email</label>
           <input
-            onChange={(e) => setEmail(e.target.value)}
+
             className="border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
             placeholder="Email"
             type="text"
-            value={email}
+
             required
           />
         </div>
@@ -55,11 +34,11 @@ const Register = () => {
         <div className="w-full flex flex-col  gap-y-1">
           <label htmlFor="">Password</label>
           <input
-            onChange={(e) => setPassword(e.target.value)}
+
             className="border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
             placeholder="Password"
             type="password"
-            value={password}
+
             required
           />
         </div>

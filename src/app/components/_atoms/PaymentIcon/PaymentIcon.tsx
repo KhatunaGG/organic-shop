@@ -18,7 +18,7 @@ const PaymentIcon = () => {
         fill="#1A1A1A"
         stroke="#333333"
       />
-      <g clip-path="url(#clip0_1906_1874)">
+      <g clipPath="url(#clip0_1906_1874)">
         <rect
           width="11"
           height="11"
@@ -28,16 +28,16 @@ const PaymentIcon = () => {
         <path
           d="M13.7083 9.04199H7.29167C6.78541 9.04199 6.375 9.4524 6.375 9.95866V13.167C6.375 13.6733 6.78541 14.0837 7.29167 14.0837H13.7083C14.2146 14.0837 14.625 13.6733 14.625 13.167V9.95866C14.625 9.4524 14.2146 9.04199 13.7083 9.04199Z"
           stroke="white"
-          stroke-width="0.916667"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="0.916667"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M8.20837 9.04199V7.20866C8.20837 6.60087 8.44982 6.01798 8.87959 5.58821C9.30936 5.15843 9.89225 4.91699 10.5 4.91699C11.1078 4.91699 11.6907 5.15843 12.1205 5.58821C12.5503 6.01798 12.7917 6.60087 12.7917 7.20866V9.04199"
           stroke="white"
-          stroke-width="0.916667"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="0.916667"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <path

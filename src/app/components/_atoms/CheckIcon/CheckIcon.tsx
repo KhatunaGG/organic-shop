@@ -9,9 +9,9 @@ const CheckIcon = () => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="green"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="lucide lucide-check font-bold"
     >
       <path d="M20 6 9 17l-5-5" />
