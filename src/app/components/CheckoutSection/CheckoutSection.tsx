@@ -2,56 +2,18 @@
 import OrderSummery from "../OrderSummery/OrderSummery";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import React, { useState, useMemo, useContext } from "react";
 import Select, { SingleValue } from "react-select";
 import countryList from "react-select-country-list";
-import { usePathname, useRouter } from "next/navigation";
-import { ClobalContext, InfoType } from "@/app/context/Context";
+import { useRouter } from "next/navigation";
+import { ClobalContext } from "@/app/context/Context";
 import { axiosInstance } from "@/app/libs/axiosinstance";
 import { AxiosError } from "axios";
-import { usePriceCalculation } from "@/app/hooks/usePriceCalculation";
 import BackLink from "../_atoms/BackLink";
-
-const schema = yup.object().shape({
-  name: yup
-    .string()
-    .required("Name cannot be empty")
-    .matches(/^[A-Za-z]+$/, "Letters only"),
-  lastName: yup
-    .string()
-    .required("Last name cannot be empty")
-    .matches(/^[A-Za-z]+$/, "Letters only"),
-  street: yup.string().required("Street cannot be empty"),
-  postCode: yup.string().required("Post Code cannot be empty"),
-  email: yup.string().required().email(),
-  phone: yup
-    .string()
-    .required("Phone Number cannot be empty")
-    .matches(/^\+\d+$/, "+ & Numbers only {+000000000}")
-    .min(9, "Min Length 9"),
-});
-
-export type userInfoDataType = {
-  name: string;
-  lastName: string;
-  company?: string;
-  street: string;
-  country?: string | null;
-  state?: string;
-  postCode: string;
-  email: string;
-  phone: string;
-};
+import { InfoType, userInfoDataType } from "@/app/interfaces/interface";
+import { schema } from "@/app/schema/CheckoutSchema";
 
 function CheckoutSection() {
-
-
-
-
-
-
-
   const {
     register,
     handleSubmit,
@@ -65,7 +27,7 @@ function CheckoutSection() {
 
   const [selectedCountry, setSelectedCountry] =
     useState<SingleValue<{ value: string; label: string }>>(null);
-    const [countryValidation, setCountryValidation] = useState(false);
+  const [countryValidation, setCountryValidation] = useState(false);
 
   const context = useContext(ClobalContext);
   if (!context) return null;

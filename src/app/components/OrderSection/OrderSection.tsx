@@ -2,15 +2,9 @@
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import CheckIcon from "../_atoms/CheckIcon/CheckIcon";
-import { ClobalContext, InfoType } from "@/app/context/Context";
+import { ClobalContext } from "@/app/context/Context";
 import { useRouter } from "next/navigation";
-
-export type ArrType = {
-  title: string;
-  count: number | undefined;
-  price: number;
-  total: number;
-};
+import { InfoType } from "@/app/interfaces/interface";
 
 const OrderSection = () => {
   const [storedOrderInfo, setStoredOrderInfo] = useState<InfoType>();

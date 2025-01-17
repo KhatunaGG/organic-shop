@@ -1,11 +1,9 @@
 "use client";
-import { ClobalContext, DataType } from "@/app/context/Context";
+import { ClobalContext } from "@/app/context/Context";
 import React, { useContext } from "react";
 import Image from "next/image";
+import { CartItemPropsType } from "@/app/interfaces/interface";
 
-type CartItemPropsType = {
-  cartItem: DataType;
-};
 
 function CartItem({ cartItem }: CartItemPropsType) {
   const context = useContext(ClobalContext);
@@ -33,7 +31,6 @@ function CartItem({ cartItem }: CartItemPropsType) {
                 cartItem.sale ? "text-red-600" : "text-[var(--text-gray)]"
               }`}
             >
-              {/* $ {cartItem.sale ? cartItem.sale : cartItem.price} */}${" "}
               {(cartItem.sale ? cartItem.sale : cartItem.price).toFixed(2)}
             </li>
             <li className="flex flex-col md:flex-row items-center justify-center gap-2 p-2 border border-[#d9d6d6] rounded-[30px]">

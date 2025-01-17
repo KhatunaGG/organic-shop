@@ -1,17 +1,10 @@
 "use client";
-import React from "react";
 import ArrowGreenIcon from "../_atoms/ArrowGreenIcon/ArrowGreenIcon";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { SecondaryButtonPropsType } from "@/app/interfaces/interface";
 
-type SecondaryButtonPropsType = {
-  text: string;
-  location: string;
-};
-
-const SecondaryButton = ({ text, location }: SecondaryButtonPropsType) => {
+const SecondaryButton = ({ text }: SecondaryButtonPropsType) => {
   const router = useRouter();
-  // const path = usePathname();
-
   return (
     <>
       <button

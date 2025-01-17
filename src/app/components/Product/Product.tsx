@@ -1,5 +1,5 @@
 "use client";
-import { ClobalContext, DataType } from "@/app/context/Context";
+import { ClobalContext } from "@/app/context/Context";
 import * as React from "react";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
@@ -9,10 +9,7 @@ import Image from "next/image";
 import { axiosInstance } from "@/app/libs/axiosinstance";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-
-type ProductPropsType = {
-  product: DataType;
-};
+import { ProductPropsType } from "@/app/interfaces/interface";
 
 const Product = ({ product }: ProductPropsType) => {
   const router = useRouter();

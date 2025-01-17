@@ -15,20 +15,13 @@ function Filter() {
     handleFilter,
     value,
     setValue,
-    // setLength,
     length,
-    // setCategoryArray,
-    // setCopiedData
   } = context;
   const price_range = [0, 20];
 
   const handleChange = (_event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
   };
-
-  // function valuetext(value: number) {
-  //   return `${value}`;
-  // }
 
   return (
     <div className="hidden w-[25%] md:flex flex-col items-start gap-4">

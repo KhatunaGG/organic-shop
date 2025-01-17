@@ -14,6 +14,7 @@ const Intro = () => {
     total,
     currentUser,
     logout,
+    accessToken
   } = context;
 
   return (
@@ -28,7 +29,7 @@ const Intro = () => {
             <div className="relative">
               <HeartIcon width="w-6" height="h-6" />
               <div className="w-5 h-5 rounded-full bg-[#ffffff65] absolute top-[-2px] right-[-9px] flex items-center justify-center text-red-600 font-bold text-sm ">
-                {favorites.length}
+                {accessToken ? favorites.length : 0}
               </div>
             </div>
 

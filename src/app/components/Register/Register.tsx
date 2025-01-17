@@ -4,36 +4,13 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { axiosInstance } from "@/app/libs/axiosinstance";
 import { ORGANIC_SHOP_URI } from "@/app/constants/constants";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-export type signUpType = {
-  name: string;
-  email: string;
-  password: string;
-};
-
-const schema = yup.object().shape({
-  name: yup
-    .string()
-    .required("Name cannot be empty")
-    .matches(/^[A-Za-z]+$/, "Letters only"),
-  email: yup
-    .string()
-    .required("Email cannot be empty")
-    .email("Looks like this is not an email"),
-  password: yup
-    .string()
-    .required("Password cannot be empty")
-    .matches(
-      /^(?=[A-Za-z0-9]*$)[A-Za-z0-9]{4,20}$/,
-      "Letters and Numbers only"
-    ),
-});
+import { signUpType } from "@/app/interfaces/interface";
+import { schema } from "@/app/schema/RegisterSchema";
 
 const Register = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -154,9 +131,9 @@ const Register = () => {
         <label htmlFor="">
           Already have an account?
           <span
-            onClick={() => {
+            onClick={async () => {
               if (isChecked === path) {
-                router.push("/pages/signin");
+                await router.push("/pages/signin");
                 setIsChecked("");
               }
             }}

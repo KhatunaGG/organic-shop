@@ -1,4 +1,5 @@
 "use client";
+import { VideoPropsType } from "@/app/interfaces/interface";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -18,14 +19,6 @@ export function formatDuration(duration: number) {
   }
   return `${minutes}:${ZERO_FORMATTER.format(seconds)}`;
 }
-
-type VideoPropsType = {
-  title: string;
-  videoURL: string;
-  duration: number;
-  view: number;
-  img: string;
-}[];
 
 const VideoArr: VideoPropsType = [
   {

@@ -2,10 +2,7 @@
 import React, { useContext } from "react";
 import { ClobalContext } from "@/app/context/Context";
 import { useRouter } from "next/navigation";
-
-type CartTotalPropsType = {
-  totalPrice: number;
-};
+import { CartTotalPropsType } from "@/app/interfaces/interface";
 
 const CartTotal = ({ totalPrice }: CartTotalPropsType) => {
   const router = useRouter();
@@ -13,7 +10,7 @@ const CartTotal = ({ totalPrice }: CartTotalPropsType) => {
   if (!context) return;
   const { total, shoppingCartItems, accessToken } = context;
   const Shipping = 3.99;
-  console.log(totalPrice)
+  console.log(totalPrice);
 
   const proceedToCheckout = () => {
     if (accessToken && shoppingCartItems.length > 0) {

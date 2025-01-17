@@ -1,11 +1,8 @@
 "use client";
-import { DataType } from "@/app/context/Context";
+import { ImageSliderPropsType } from "@/app/interfaces/interface";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-type ImageSliderPropsType = {
-    data: DataType[];
-}
 
 const ImageSlider = ({ data }: ImageSliderPropsType) => {
   const [activeImage, setActiveImage] = useState(0);

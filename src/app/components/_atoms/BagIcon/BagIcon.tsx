@@ -1,9 +1,4 @@
-import React from "react";
-
-type BagIconPropsType = {
-  width: string;
-  hight: string;
-};
+import { BagIconPropsType } from "@/app/interfaces/interface";
 
 function BagIcon({ width, hight }: BagIconPropsType) {
   return (

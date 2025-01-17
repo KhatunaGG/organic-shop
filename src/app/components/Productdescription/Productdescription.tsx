@@ -1,14 +1,12 @@
 "use client";
-import { ClobalContext, DataType } from "@/app/context/Context";
+import { ClobalContext } from "@/app/context/Context";
 import React, { useContext } from "react";
 import Link from "next/link";
 import Overlay from "../Overlay/Overlay";
 import Image from "next/image";
 import { BagIcon, HeartIcon } from "../_atoms";
+import { DataType, ProductDescType } from "@/app/interfaces/interface";
 
-type ProductDescType = {
-  params: string;
-};
 
 function Productdescription({ params }: ProductDescType) {
   const context = useContext(ClobalContext);

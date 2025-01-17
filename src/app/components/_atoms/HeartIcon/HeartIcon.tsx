@@ -1,12 +1,7 @@
 "use client";
-import { ClobalContext, DataType } from "@/app/context/Context";
-import React, { useContext } from "react";
-
-type HeartIconPropsType = {
-  product?: DataType;
-  width?: string;
-  height?: string;
-};
+import { ClobalContext } from "@/app/context/Context";
+import { HeartIconPropsType } from "@/app/interfaces/interface";
+import { useContext } from "react";
 
 function HeartIcon({ product, width, height }: HeartIconPropsType) {
   const context = useContext(ClobalContext);

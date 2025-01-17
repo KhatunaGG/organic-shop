@@ -1,8 +1,4 @@
-import React from "react";
-
-type FilterIconPropsType = {
-  checked: string | null;
-};
+import { FilterIconPropsType } from "@/app/interfaces/interface";
 
 const FilterIcon = ({ checked }: FilterIconPropsType) => {
   return (

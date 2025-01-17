@@ -4,31 +4,13 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { axiosInstance } from "@/app/libs/axiosinstance";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setCookie } from "cookies-next";
-
-export type SignInType = {
-  email: string;
-  password: string;
-};
-
-const schema = yup.object().shape({
-  email: yup
-    .string()
-    .required("Email cannot be empty")
-    .email("Looks like this is not an email"),
-  password: yup
-    .string()
-    .required("Password cannot be empty")
-    .matches(
-      /^(?=[A-Za-z0-9]*$)[A-Za-z0-9]{4,20}$/,
-      "Letters and Numbers only"
-    ),
-});
+import { SignInType } from "@/app/interfaces/interface";
+import { schema } from "@/app/schema/LoginSchema";
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -50,8 +32,6 @@ const Login = () => {
     isChecked,
     setIsChecked,
     setAccessToken,
-    // setCurrentUser,
-    // currentUser,
     accessToken,
     shoppingCartItems,
   } = context;
@@ -79,7 +59,7 @@ const Login = () => {
         });
       } else {
         setErrorMessage("An error occurred");
-        console.log(errorMessage)
+        console.log(errorMessage);
       }
     }
   };
@@ -145,9 +125,9 @@ const Login = () => {
         <label htmlFor="">
           Do not have an account?
           <span
-            onClick={() => {
+            onClick={async () => {
               if (isChecked === path) {
-                router.push("/pages/signup");
+                await router.push("/pages/signup");
                 setIsChecked("");
               }
             }}

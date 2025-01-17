@@ -2,11 +2,7 @@
 import React, { useContext } from "react";
 import Image from "next/image";
 import { ClobalContext } from "@/app/context/Context";
-
-
-type OrderSummeryPropsType = {
-  onSubmit: (e: React.BaseSyntheticEvent) => Promise<void>;
-};
+import { OrderSummeryPropsType } from "@/app/interfaces/interface";
 
 const OrderSummery = ({ onSubmit }: OrderSummeryPropsType) => {
   const context = useContext(ClobalContext);
