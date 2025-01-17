@@ -1,5 +1,4 @@
 import { Nav, SaleBanner, SalesSection } from "@/app/components";
-import React from "react";
 
 export default function page() {
   return (

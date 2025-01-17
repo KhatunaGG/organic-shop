@@ -1,24 +1,88 @@
 "use client";
 import { ClobalContext } from "@/app/context/Context";
-
-
 import { usePathname, useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
-import { useAuthState, useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { axiosInstance } from "@/app/libs/axiosinstance";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { setCookie } from "cookies-next";
+
+export type SignInType = {
+  email: string;
+  password: string;
+};
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .required("Email cannot be empty")
+    .email("Looks like this is not an email"),
+  password: yup
+    .string()
+    .required("Password cannot be empty")
+    .matches(
+      /^(?=[A-Za-z0-9]*$)[A-Za-z0-9]{4,20}$/,
+      "Letters and Numbers only"
+    ),
+});
 
 const Login = () => {
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+  const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
   const path = usePathname();
   const context = useContext(ClobalContext);
-  if (!context) return;
-  const { handleChange, isChecked, setIsChecked } = context;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<SignInType>({
+    resolver: yupResolver(schema),
+  });
 
+  if (!context) return null;
+  const {
+    handleChange,
+    isChecked,
+    setIsChecked,
+    setAccessToken,
+    // setCurrentUser,
+    // currentUser,
+    accessToken,
+    shoppingCartItems,
+  } = context;
 
-
+  const onSubmit = async (data: SignInType) => {
+    try {
+      const res = await axiosInstance.post("/auth/sign-in", data);
+      if (res.status === 200 || res.status === 201) {
+        const token = res.data.accessToken;
+        setAccessToken(token);
+        setCookie("accessToken", token, { maxAge: 60 * 60 });
+        reset();
+      }
+      if (accessToken && shoppingCartItems.length !== 0) {
+        router.push("/pages/checkout");
+      } else {
+        router.push("/");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const message = error.response?.data?.message || "An error occurred";
+        toast.error(message, {
+          position: "top-left",
+          autoClose: 2000,
+        });
+      } else {
+        setErrorMessage("An error occurred");
+        console.log(errorMessage)
+      }
+    }
+  };
 
   return (
     <div className="w-full md:w-[50%] flex flex-col gap-8 p-6 rounded-md shadow-md">
@@ -26,27 +90,38 @@ const Login = () => {
         Sign In
       </h1>
 
-      <form  className="w-full flex flex-col gap-6">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full flex flex-col gap-6"
+      >
         <div className="w-full flex flex-col  gap-y-1">
           <label htmlFor="">Email</label>
           <input
-            onChange={(e) => setEmail(e.target.value)}
             className="border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
             placeholder="Email"
             type="text"
-            required
+            {...register("email")}
           />
+          {errors.email && (
+            <span className="absolute bottom-[-18px] right-[5px] italic text-[#CD2C2C] font-medium text-[12px]">
+              {errors.email.message}
+            </span>
+          )}
         </div>
 
         <div className="w-full flex flex-col  gap-y-1">
           <label htmlFor="">Password</label>
           <input
-            onChange={(e) => setPassword(e.target.value)}
             className="border border-[#e1dfdf] py-[14px] rounded-md pl-2 outline-none"
             placeholder="Password"
             type="password"
-            required
+            {...register("password")}
           />
+          {errors.password && (
+            <span className="absolute bottom-[-18px] right-[5px] italic text-[#CD2C2C] font-medium text-[12px]">
+              {errors.password?.message}
+            </span>
+          )}
         </div>
 
         <button
@@ -83,6 +158,7 @@ const Login = () => {
           </span>
         </label>
       </div>
+      <ToastContainer />
     </div>
   );
 };

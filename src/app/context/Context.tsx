@@ -1,12 +1,10 @@
 "use client";
 import React, { createContext, useEffect, useState } from "react";
-import datajson from "../data/data.json";
-// import { useAuthState } from "react-firebase-hooks/auth";
-// import { auth } from "../firebase/config";
 import { userInfoDataType } from "../components/CheckoutSection/CheckoutSection";
-import { ArrType } from "../components/OrderSection/OrderSection";
-// import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged } from "firebase/auth";
-// import {auth} from '../firebase/config'
+import { axiosInstance } from "../libs/axiosinstance";
+import { useRouter } from "next/navigation";
+import { getCookie, deleteCookie } from "cookies-next";
+import { usePriceCalculation } from "../hooks/usePriceCalculation";
 
 export type GlobalStateType = {
   data: DataType[];
@@ -14,44 +12,58 @@ export type GlobalStateType = {
   shoppingCartItems: DataType[];
   totalPrice: number;
   setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
-  increment: (value: number) => void;
-  decrement: (value: number) => void;
+  increment: (_id: string) => void;
+  decrement: (_id: string) => void;
   setTotalCount: React.Dispatch<React.SetStateAction<number>>;
   totalCount: number;
-  removeCartItem: (value: number) => void;
+  removeCartItem: (_id: string) => void;
   setShoppingCartItems: React.Dispatch<React.SetStateAction<DataType[]>>;
-  // setShoppingCartItems: (items: DataType[]) => void;
   getFavorites: (value: DataType) => void;
   favorites: DataType[];
   categoryArray: String[];
   checked: string | null;
-  // handleFilter: (num: number, str: string) => void;
   handleFilter: (str: string) => void;
   value: number[];
   setValue: React.Dispatch<React.SetStateAction<number[]>>;
-  getInputSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSearch: (e: React.FormEvent<HTMLFormElement>) => void;
   search: string;
   length: number;
   setLength: React.Dispatch<React.SetStateAction<number>>;
   setButtonInnerText: React.Dispatch<React.SetStateAction<string>>;
   setOverlay: React.Dispatch<React.SetStateAction<string>>;
   overlay: string;
-  setLoggedInUser: React.Dispatch<React.SetStateAction<string>>;
-
-  loggedInUser: string;
   handleChange: (value: string) => void;
   isChecked: string;
   setIsChecked: React.Dispatch<React.SetStateAction<string>>;
-
   handleRadioChange: (value: string) => void;
   isRadioChecked: string | null;
-
   info: InfoType | undefined;
   setInfo: React.Dispatch<React.SetStateAction<InfoType | undefined>>;
   total: number;
-  // setInvoice: React.Dispatch<React.SetStateAction<IInvoiceType | undefined>>
-
+  setAccessToken: React.Dispatch<React.SetStateAction<string | null>>;
+  userCookie: string | undefined;
+  setCurrentUser: React.Dispatch<
+    React.SetStateAction<CurrentUserType | undefined>
+  >;
+  currentUser: CurrentUserType | undefined;
+  logout: () => void;
+  accessToken: string | null;
+  setCategoryArray: React.Dispatch<React.SetStateAction<string[]>>;
+  setCopiedData: React.Dispatch<React.SetStateAction<DataType[]>>;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setData: React.Dispatch<React.SetStateAction<DataType[]>>;
+  copiedData: DataType[];
+  handleRoute: () => void;
+  setEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  edit: boolean;
+  editInvoice: (value: string) => void;
+  invoiceForEdit: InfoType | undefined;
+  setIsRadioChecked: React.Dispatch<React.SetStateAction<string | null>>;
+  setInvoiceForEdit: React.Dispatch<React.SetStateAction<InfoType | undefined>>;
+  setAllInvoices: React.Dispatch<React.SetStateAction<InfoType[]>>;
+  allInvoices: InfoType[] | null;
+  calculatedTotalPrice: number;
+  shipping: number;
+  forPayment: number;
 };
 
 export type RatingType = {
@@ -61,91 +73,194 @@ export type RatingType = {
 
 export type DataType = {
   name: string;
-  id: number;
+  _id?: string;
   title: string;
   price: number;
   description: string;
   category: string;
   image: string;
   rating: RatingType;
-  count?: number;
+  count: number;
   sale?: number;
 };
 
 export type InfoType = {
-  "Billing Information": userInfoDataType;
-  "Payment Method": string | null;
+  billingInformation: userInfoDataType;
+  paymentMethod: string | null;
+  orders: DataType[];
+  orderTotalPrice: number;
+  shipping: number;
+  forPayment: number;
+  orderId: string;
+  _id?: string | undefined;
+  userId?: string;
 };
 
-// export type InvoiceType = {
-//   info: InfoType,
-//   purchase: ArrType[];
+export type CurrentUserType = {
+  _id: string;
+  name: string;
+  email: string;
+  purchases: string[];
+};
 
-// }
-
-
-// interface IInvoiceType {
-//   info: InfoType,
-//   purchase: ArrType[];
-
-// }
-
-export const typedDataJson = datajson as DataType[];
 export const ClobalContext = createContext<GlobalStateType | null>(null);
 
 const Context = ({ children }: { children: React.ReactNode }) => {
-  const [data, setData] = useState<DataType[]>(typedDataJson);
+  const router = useRouter();
+  const [data, setData] = useState<DataType[]>([]);
+  const [copiedData, setCopiedData] = useState<DataType[]>([]);
   const [shoppingCartItems, setShoppingCartItems] = useState<DataType[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [favorites, setFavorites] = useState<DataType[]>([]);
-  const [categoryArray, setCategoryArray] = useState<string[]>([]);
-  // const [checked, setChecked] = useState<number | null>(null);
   const [checked, setChecked] = useState<string | null>(null);
   const [value, setValue] = useState<number[]>([0, 20]);
   const [search, setSearch] = useState("");
   const [buttonInnerText, setButtonInnerText] = useState("");
   const [overlay, setOverlay] = useState("");
-
-  const [length, setLength] = useState(data.length);
-  // const [length, setLength] = useState(0);
-  const [loggedInUser, setLoggedInUser] = useState("");
-
+  const [length, setLength] = useState<number>(0);
+  const [categoryArray, setCategoryArray] = useState<string[]>([]);
   const [isChecked, setIsChecked] = useState("");
   const [isRadioChecked, setIsRadioChecked] = useState<string | null>(null);
-  const [category, setCategory] = useState(checked);
   const [total, setTotal] = useState(0);
-  // const [invoice, setInvoice] = useState<IInvoiceType>();
-  const [info, setInfo] = useState<InfoType>();
+  const [info, setInfo] = useState<InfoType | undefined>();
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [userCookie, setUserCookie] = useState<string | undefined>();
+  const [currentUser, setCurrentUser] = useState<CurrentUserType | undefined>();
+  const [edit, setEdit] = useState(false);
+  const [invoiceForEdit, setInvoiceForEdit] = useState<InfoType | undefined>();
+  const [allInvoices, setAllInvoices] = useState<InfoType[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
+  const [calculatedTotalPrice, setCalculatedTotalPrice] = useState(0);
+  const [shipping, setShipping] = useState(0);
+  const [forPayment, setForPayment] = useState(0);
 
+  useEffect(() => {
+    const getProductsData = async () => {
+      try {
+        const res = await axiosInstance.get("/products");
+        setData(res.data);
+        setCopiedData(res.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    getProductsData();
 
+    const storedFavorites = localStorage.getItem("favorites");
+    if (storedFavorites) {
+      setFavorites(JSON.parse(storedFavorites) || []);
+    }
+
+    const storedCartItems = localStorage.getItem("shoppingCartItems");
+    if (storedCartItems) {
+      setShoppingCartItems(JSON.parse(storedCartItems));
+    }
+  }, []);
+
+  async function getUserInfo(token: string | undefined) {
+    try {
+      const res = await axiosInstance.get("/auth/current-user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setCurrentUser(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    const cookie = getCookie("accessToken");
+    setAccessToken(cookie || null);
+    if (cookie) {
+      getUserInfo(cookie);
+    } else {
+      router.push("/");
+    }
+  }, [accessToken, router]);
+
+  const handleRoute = () => {
+    if (!accessToken) {
+      router.push("/pages/signup");
+    } else {
+      router.push("/pages/checkout");
+    }
+  };
+
+  const {
+    orderTotalPrice,
+    shipping: calculatedShipping,
+    forPayment: calculatedForPayment,
+  } = usePriceCalculation(shoppingCartItems);
+
+  useEffect(() => {
+    setCalculatedTotalPrice(orderTotalPrice);
+    setShipping(calculatedShipping);
+    setForPayment(calculatedForPayment);
+  }, [orderTotalPrice, calculatedShipping, calculatedForPayment]);
+
+  const getAllInvoices = async () => {
+    try {
+      const res = await axiosInstance.get("/purchases", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (res.data && res.data.length === 0) {
+        setError("You have no purchases yet.");
+        setAllInvoices([]);
+      } else {
+        setAllInvoices(res.data);
+        setError(null);
+      }
+    } catch (error) {
+      setError("An error occurred while fetching your purchases.");
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllInvoices();
+  }, [accessToken]);
+
+  const logout = () => {
+    setCurrentUser(undefined);
+    setAccessToken(null);
+    setUserCookie(undefined);
+    deleteCookie("accessToken");
+    setShoppingCartItems([]);
+    setTotalCount(0);
+    setTotalPrice(0);
+    localStorage.removeItem("orderInfo");
+    localStorage.removeItem("shoppingCartItems");
+    setInfo(undefined);
+    setInvoiceForEdit(undefined);
+    setShoppingCartItems([]);
+    router.push("/");
+  };
 
   useEffect(() => {
     const itemTotalPrice = shoppingCartItems.reduce((acc, el) => {
       const itemPrice = el.sale || el.price;
-      const itemTotal = itemPrice * (el.count || 1); // Use 0 as default if count is undefined
+      const itemTotal = itemPrice * (el.count || 1);
       return acc + itemTotal;
     }, 0);
-    setTotal(itemTotalPrice)
+    setTotal(itemTotalPrice);
   }, [shoppingCartItems]);
 
-
-
-
   useEffect(() => {
-    setLength(data.length);
-    if (value) {
+    if (data && value) {
       setLength(
         data.filter((item) => item.price >= value[0] && item.price <= value[1])
           .length
       );
     }
   }, [data, value]);
-
-  // useEffect(() => {
-  //   setLength(data.filter((item) => item.price >= value[0] && item.price <= value[1]).length)
-  // }, [value])
 
   const handleRadioChange = (pay: string) => {
     if (isRadioChecked === pay) {
@@ -164,41 +279,23 @@ const Context = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    const categorySet = new Set(data.map((product) => product.category));
+    const categorySet = new Set(data?.map((product) => product.category));
     setCategoryArray(Array.from(categorySet));
   }, [data]);
 
+  const handleFilter = (categoryItem: string) => {
+    console.log(categoryItem, "categoryItem");
 
-  const handleFilter = (categoryitem: string) => {
-    console.log(categoryitem, "categoryitem");
-    if (checked === categoryitem) {
+    if (checked === categoryItem) {
       setChecked(null);
-      setData(typedDataJson);
+      setData(copiedData);
     } else {
-      setChecked(categoryitem);
+      setChecked(categoryItem);
       setData(
-        typedDataJson.filter(
-          (item) => item.category.toLowerCase() === categoryitem
+        copiedData.filter(
+          (item) => item.category.toLowerCase() === categoryItem
         )
       );
-    }
-  };
-
-  const getInputSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
-
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (search && buttonInnerText.toLowerCase() === "search") {
-      setData(
-        typedDataJson.filter((item) =>
-          item.title.toLowerCase().includes(search.toLowerCase())
-        )
-      );
-      setSearch("");
-    } else {
-      setData(typedDataJson);
     }
   };
 
@@ -222,59 +319,93 @@ const Context = ({ children }: { children: React.ReactNode }) => {
 
   const getFavorites = (item: DataType) => {
     setFavorites((prev) => {
-      if (prev.includes(item)) {
-        return prev.filter((el) => el.id !== item.id);
-      } else {
-        return [...prev, item];
-      }
+      const updatedFavorites = prev.includes(item)
+        ? prev.filter((el) => el._id !== item._id)
+        : [...prev, item];
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+
+      return updatedFavorites;
     });
   };
 
   const addToCart = (productItem: DataType) => {
     if (!productItem) return;
 
-    const isInCart = shoppingCartItems?.some(
-      (item) => item.id === productItem.id
+    const isInCart = shoppingCartItems.some(
+      (item) => item._id === productItem._id
     );
 
     if (isInCart) {
       setShoppingCartItems((prev) => {
-        return prev;
+        const updatedItems = prev.map((item) =>
+          item._id === productItem._id
+            ? { ...item, count: (item.count || 0) + 1 }
+            : item
+        );
+        localStorage.setItem("shoppingCartItems", JSON.stringify(updatedItems));
+        return updatedItems;
       });
     } else {
       setShoppingCartItems((prev) => {
         const newItem = { ...productItem, count: 1 };
-        if (!prev) return [newItem];
-        return [...prev, newItem];
+        const updatedCartItems = prev ? [...prev, newItem] : [newItem];
+        localStorage.setItem(
+          "shoppingCartItems",
+          JSON.stringify(updatedCartItems)
+        );
+        return updatedCartItems;
       });
     }
   };
 
-  const increment = (countPlusId: number) => {
-    setShoppingCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === countPlusId
+  const increment = (countPlusId: string) => {
+    setShoppingCartItems((prevItems) => {
+      const updatedItems = prevItems.map((item) =>
+        item._id === countPlusId
           ? { ...item, count: (item.count || 0) + 1 }
           : item
-      )
-    );
+      );
+      localStorage.setItem("shoppingCartItems", JSON.stringify(updatedItems));
+      return updatedItems;
+    });
   };
 
-  const decrement = (countMinusId: number) => {
-    setShoppingCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === countMinusId
+  const decrement = (countMinusId: string) => {
+    setShoppingCartItems((prevItems) => {
+      const updatedItems = prevItems.map((item) =>
+        item._id === countMinusId
           ? { ...item, count: Math.max(0, (item.count || 0) - 1) }
           : item
-      )
+      );
+      localStorage.setItem("shoppingCartItems", JSON.stringify(updatedItems));
+      return updatedItems;
+    });
+  };
+
+  const removeCartItem = (removeId: string) => {
+    const updatedShoppingCart = shoppingCartItems.filter(
+      (item) => item._id !== removeId
+    );
+    setShoppingCartItems(updatedShoppingCart);
+    localStorage.setItem(
+      "shoppingCartItems",
+      JSON.stringify(updatedShoppingCart)
     );
   };
 
-  const removeCartItem = (removeId: number) => {
-    const updatedShoppingCart = shoppingCartItems.filter(
-      (item) => item.id !== removeId
-    );
-    return setShoppingCartItems(updatedShoppingCart);
+  const editInvoice = async (id: string) => {
+    try {
+      const res = await axiosInstance.get(`/purchases/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (res.status === 201 || res.status === 200) {
+        setInvoiceForEdit(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -298,15 +429,11 @@ const Context = ({ children }: { children: React.ReactNode }) => {
         handleFilter,
         value,
         setValue,
-        getInputSearch,
-        handleSearch,
         search,
         setButtonInnerText,
         length,
         setOverlay,
         overlay,
-        setLoggedInUser,
-        loggedInUser,
         handleChange,
         isChecked,
         setIsChecked,
@@ -316,7 +443,29 @@ const Context = ({ children }: { children: React.ReactNode }) => {
         setInfo,
         info,
         total,
-        // setInvoice
+        setAccessToken,
+        userCookie,
+        setCurrentUser,
+        currentUser,
+        logout,
+        accessToken,
+        setCategoryArray,
+        setCopiedData,
+        setSearch,
+        setData,
+        copiedData,
+        handleRoute,
+        setEdit,
+        edit,
+        editInvoice,
+        invoiceForEdit,
+        setIsRadioChecked,
+        setInvoiceForEdit,
+        setAllInvoices,
+        allInvoices,
+        calculatedTotalPrice,
+        shipping,
+        forPayment,
       }}
     >
       {children}

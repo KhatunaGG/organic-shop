@@ -1,10 +1,17 @@
 import React from "react";
-import { MastercardIcon, PayIcon, PaymentIcon, VisaIcon, VerIcon, LeafIcon, EcobazarIcon  } from "../_atoms";
-
+import {
+  MastercardIcon,
+  PayIcon,
+  PaymentIcon,
+  VisaIcon,
+  VerIcon,
+  LeafIcon,
+  EcobazarIcon,
+} from "../_atoms";
 
 const Footer = () => {
   return (
-    <div className="bg-green-950 md:mt-[100px]">
+    <div className="bg-green-950 ">
       <div className="max-w-screen-xl  mx-auto pt-6 md:pt-0 px-[3%]  lg:px-[7%] text-gray-400 flex flex-col">
         <div className=" pb-0 md:py-[60px] flex flex-col gap-4 items-start md:flex-col md:gap-y-6 lg:gap-x-[5%] lg:flex-row md:justify-between">
           <div className="w-full md:w-full lg:w-[35%] flex flex-col gap-4">

@@ -2,8 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -11,66 +10,27 @@
 
 :root {
   --text-gray: #7d7979;
-  /* height: ; */
 }
-
-
-
-/* 
-
-.custom-radio {
-  @apply w-4 h-4 border-2 border-emerald-400 rounded-full appearance-none cursor-pointer;
-}
-
-.custom-radio:checked {
-  @apply border-green-500 bg-green-500;
-}
-
-.custom-radio:checked::before {
-  content: '';
-  display: block;
-  width: 50%;
-  height: 50%;
-  margin: 25%;
-  background-color: white;
-  border-radius: 50%;
-}
-
-.custom-radio:not(:checked) {
-  @apply border-green-500;
-}
-
-.custom-radio:focus {
-  @apply outline-none ring-1 ring-emerald-400;
-} */
-
-
-
-
-
-
-
-
 
 .custom-radio {
   appearance: none;
   width: 1rem;
   height: 1rem;
-  border: 2px solid #10B981;
+  border: 2px solid #10b981;
   border-radius: 50%;
   position: relative;
   cursor: pointer;
 }
 
 .custom-radio:checked {
-  border-color: #10B981;
+  border-color: #10b981;
 }
 
 .custom-radio:checked::before {
-  content: '';
+  content: "";
   width: 0.5rem;
   height: 0.5rem;
-  background-color: #10B981;
+  background-color: #10b981;
   border-radius: 50%;
   position: absolute;
   top: 50%;

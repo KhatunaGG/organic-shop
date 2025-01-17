@@ -15,13 +15,13 @@ function Productdescription({ params }: ProductDescType) {
   if (!context) return;
   const { data, overlay, setOverlay, getFavorites, addToCart } = context;
 
-  const productDetails = data.filter((item) => item.id === Number(params));
+  const productDetails = data.filter((item) => item._id === params);
   console.log(productDetails);
 
   return (
     <>
       {productDetails.map((product: DataType, i: number) => (
-        <div key={i} className="w-full  mt-8 mx-auto">
+        <div key={i} className="w-full  mt-8 mx-auto md:pb-[100px]">
           <div className=" flex flex-col md:flex-row items-center justify-between">
             <div className="w-full h-[300px] md:h-[450px] bg-white flex items-center justify-center md:w-[40%] relative">
               <Link href={"/"}>
@@ -29,20 +29,27 @@ function Productdescription({ params }: ProductDescType) {
                   Go Back
                 </span>
               </Link>
-              <Image
-                src={product.image}
-                alt={""}
-                width={400}
-                height={400}
-                className="w-[250px] h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] "
-                onClick={() => setOverlay(product.image)}
-              />
-              {/* <img
-              onClick={() => setOverlay(item.image)}
-                className="w-[250px] h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] "
-                src={item.image}
-                alt=""
-              /> */}
+
+              <div className="w-full relative">
+                <Image
+                  src={product.image}
+                  alt={""}
+                  width={400}
+                  height={400}
+                  className="w-[250px] h-[250px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] "
+                />
+
+                <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity duration-400 rounded-lg ">
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-400">
+                    <span
+                      onClick={() => setOverlay(product.image)}
+                      className="text-white text-xl font-semibold cursor-pointer py-8"
+                    >
+                      Zoom...
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {overlay === product.image && <Overlay />}
@@ -69,12 +76,11 @@ function Productdescription({ params }: ProductDescType) {
 
                 <div className="w-[90%] flex flex-row items-center justify-between gap-3">
                   <button
-                  onClick={() => addToCart(product)}
-                  className="w-[90%] border flex flex-row gap-3 items-center justify-center text-white text-sm font-bold py-4 rounded-[30px] transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 bg-gradient-to-b from-green-500 to-yellow-400 focus:ring-yellow-300 active:from-yellow-300">
+                    onClick={() => addToCart(product)}
+                    className="w-[90%] border flex flex-row gap-3 items-center justify-center text-white text-sm font-bold py-4 rounded-[30px] transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 bg-gradient-to-b from-green-500 to-yellow-400 focus:ring-yellow-300 active:from-yellow-300"
+                  >
                     <span>Add to Cart</span>
-
                     <BagIcon width="20px" hight="20px" />
-                    {/* <img className="w-6 h-6" src="/assets/Bag.svg" alt="" /> */}
                   </button>
 
                   <button
@@ -82,18 +88,11 @@ function Productdescription({ params }: ProductDescType) {
                     className="outline-none top-[2%] right-[2%] bg-[#F2F2F2] w-[40px] h-[40px] rounded-full flex items-center justify-center "
                   >
                     <HeartIcon height="24px" width="24px" product={product} />
-
-                    {/*                    
-                    <img
-                      className="w-6 h-6"
-                      src="/assets/Heart (1).svg"
-                      alt=""
-                    /> */}
                   </button>
                 </div>
 
                 <div className="w-full flex flex-row items-center gap-2">
-                  <span className="text-sm tetx-black">Category:</span>
+                  <span className="text-sm text-black">Category:</span>
                   <span className="text-sm text-[#898787]">
                     {product.category}
                   </span>

@@ -1,12 +1,4 @@
-import {
-  Footer,
-  Header,
-  Intro,
-  Nav,
-  Products,
-  SaleBanner,
-} from "./components/index";
-
+import { Header, Intro, Nav, Products, SaleBanner } from "./components/index";
 
 export default function Home() {
   return (

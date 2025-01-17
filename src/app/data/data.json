@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "title": "Big Potatos",
+    "title": "Big Potatoes",
     "price": 14.99,
     "description": "Russet potatoes, also known as Idaho potatoes, are ideal for making baked potatoes. They are large with a long oval shape and brown skin. Their flesh is starchy, so they become fluffy and flaky when cooked.",
     "category": "Vegetables",
@@ -15,14 +15,14 @@
 
   {
     "id": 2,
-    "title": "Chanise Cabbage",
+    "title": "Chaines Cabbage",
     "price": 11.99,
     "description": "The Chinese cabbage occurs in both annual and biennial forms but is cultivated as an annual. It forms an upright head of either tightly overlapping leaves or sometimes a looser head of more separated leaves. Shape and size differ markedly between cultivars and head weight may vary between 1.4 and 4.5 kg",
     "category": "Vegetables",
     "image": "/assets/cabbage.png",
     "rating": {
-        "rate": 4.1,
-        "count": 259
+      "rate": 4.1,
+      "count": 259
     }
   },
   {
@@ -64,7 +64,7 @@
   {
     "id": 6,
     "title": "Green Apple",
-    "price": 7.00,
+    "price": 7.0,
     "description": "Green apples are medium in size (approximately 2 ¼ inches across) and round-conical in shape, with some ribbing. The Green apple's white flesh is hard, crispy, and juicy. The flavor of Green apples is extremely acidic, sometimes to the point of not having other taste, but generally refreshing.",
     "category": "Fruit",
     "image": "/assets/Green Apple.png",
@@ -112,11 +112,11 @@
   },
   {
     "id": 10,
-    "title": "Green Littuce",
+    "title": "Green Lettuce",
     "price": 2.99,
     "description": "Green leaf lettuce may look like romaine, but it's actually not the same. It does, however, make a great substitute for romaine, and like romaine and iceberg, green leafy lettuce is a member of the asteraceae family. Green leaf lettuce is soft and tender with a very mild flavor.",
     "category": "Vegetables",
-    "image": "/assets/Green Littuce.png",
+    "image": "/assets/Green Lettuce.png",
     "rating": {
       "rate": 2.9,
       "count": 470
@@ -185,7 +185,7 @@
   {
     "id": 16,
     "title": "Banana",
-    "price":4.55,
+    "price": 4.55,
     "description": "A banana is a curved, yellow fruit with a thick skin and soft sweet flesh. If you eat a banana every day for breakfast, your roommate might nickname you A banana is a tropical fruit that's quite popular all over the world. It grows in bunches on a banana tree.",
     "category": "Fruit",
     "image": "/assets/banana.png",
@@ -265,7 +265,6 @@
       "rate": 4.1,
       "count": 145
     }
-    
   },
   {
     "id": 23,

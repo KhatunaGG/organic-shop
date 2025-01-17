@@ -4,7 +4,6 @@ export { default as Products } from './Products/Products'
 export { default as Product } from './Product/Product'
 export { default as SignSection } from './SignSection/SignSection'
 export { default as Nav } from './Nav/Nav'
-export { default as Button } from './Button/Button'
 export { default as Hero } from './Hero/Hero'
 export { default as Productdescription } from './Productdescription/Productdescription'
 export { default as Cart } from './Cart/Carts'
@@ -26,6 +25,8 @@ export { default as Video } from './Video/Video'
 export { default as SalesSection} from './SalesSection/SalesSection'
 export { default as ImageSlider} from './ImageSlider/ImageSlider'
 export { default as OrderSection} from './OrderSection/OrderSection'
+export { default as MyAccountSection} from './MyAccountSection/MyAccountSection'
+
 
 
 

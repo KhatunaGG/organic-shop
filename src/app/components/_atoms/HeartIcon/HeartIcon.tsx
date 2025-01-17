@@ -13,13 +13,15 @@ function HeartIcon({ product, width, height }: HeartIconPropsType) {
   if (!context) return;
   const { favorites } = context;
 
+  const isFavorite = favorites.some((item) => item._id === product?._id);
+
   return (
     <svg
       className={`${width} ${height}`}
       width="32"
       height="33"
       viewBox="0 0 32 33"
-      fill={favorites.includes(product as DataType) ? "red" : "transparent"}
+      fill={isFavorite ? "red" : "transparent"}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
