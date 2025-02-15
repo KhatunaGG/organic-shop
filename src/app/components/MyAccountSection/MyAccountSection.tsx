@@ -1,7 +1,7 @@
 "use client";
 import { ClobalContext } from "@/app/context/Context";
 import { axiosInstance } from "@/app/libs/axiosinstance";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Minimize, Pencil, X } from "lucide-react";
@@ -13,6 +13,7 @@ const MyAccountSection = () => {
   const [active, setActive] = useState(false);
   const router = useRouter();
   const context = useContext(ClobalContext);
+   const [error, setError] = useState<string | null>(null);
 
   if (!context) return null;
   const {
@@ -24,6 +25,34 @@ const MyAccountSection = () => {
     allInvoices,
   } = context;
 
+
+  // const getAllInvoices = async () => {
+  //   try {
+  //     const res = await axiosInstance.get("/purchases", {
+  //       headers: { 
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //     });
+
+  //     if (res.data && res.data.length === 0) {
+  //       setError("You have no purchases yet.");
+  //       setAllInvoices([]);
+  //     } else {
+  //       setAllInvoices(res.data);
+  //       setError(null);
+  //     }
+  //   } catch (error) {
+  //     setError("An error occurred while fetching your purchases.");
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getAllInvoices();
+  // }, [accessToken, router]);
+
+
+  
   const getActiveInvoice = async (id: string) => {
     try {
       const res = await axiosInstance.get(`/purchases/${id}`, {
@@ -55,6 +84,9 @@ const MyAccountSection = () => {
       console.log(error);
     }
   };
+
+
+
 
   return (
     <div className="h-full w-full">

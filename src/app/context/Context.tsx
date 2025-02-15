@@ -4,8 +4,12 @@ import { axiosInstance } from "../libs/axiosinstance";
 import { useRouter } from "next/navigation";
 import { getCookie, deleteCookie } from "cookies-next";
 import { usePriceCalculation } from "../hooks/usePriceCalculation";
-import { CurrentUserType, DataType, GlobalStateType, InfoType } from "../interfaces/interface";
-
+import {
+  CurrentUserType,
+  DataType,
+  GlobalStateType,
+  InfoType,
+} from "../interfaces/interface";
 
 export const ClobalContext = createContext<GlobalStateType | null>(null);
 
@@ -130,7 +134,9 @@ const Context = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     getAllInvoices();
-  }, [accessToken]);
+  }, [accessToken, router]);
+
+
 
   const logout = () => {
     setCurrentUser(undefined);

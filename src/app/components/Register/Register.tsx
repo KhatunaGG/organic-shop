@@ -31,19 +31,25 @@ const Register = () => {
   const { handleChange, isChecked, setIsChecked } = context;
 
   const onSubmit = async (data: signUpType) => {
-    console.log(data, "data from register section");
     try {
       const res = await axiosInstance.post("/auth/sign-up", data);
+      console.log(res, "responsss");
       if (res.status === 200 || res.status === 201) {
-        reset();
         router.push(`${ORGANIC_SHOP_URI}/pages/signin`);
+        reset();
       }
     } catch (error) {
       let message = "An unexpected error occurred.";
-
       if (axios.isAxiosError(error) && error.response) {
-        message = error.response.data.message || message;
-        console.log(error.response.data.message, "errrrrrrrr");
+        if (
+          error.response.status === 400 &&
+          error.response.data.message === "User already exists"
+        ) {
+          message =
+            "User with this email already exists. Please try another email.";
+        } else {
+          message = error.response.data.message || message;
+        }
       }
       toast.error(message, {
         position: "top-left",
