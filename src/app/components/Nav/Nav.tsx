@@ -21,11 +21,11 @@ const Nav = () => {
   );
 
   return (
-    <div className="h-[10vh] flex flex-row items-center">
+    <div className="h-[10vh] flex flex-col md:flex-row items-center">
       <Search />
       <div className="hidden md:flex h-[70%] w-[1px] bg-[#b6b2b2]"></div>
 
-      <div className="hidden w-[50%] md:flex items-center justify-start gap-4 text-[#7d7979] font-bold cursor-pointer ml-4">
+      <div className="w-full flex text-xs justify-center md:w-[60%] lg:w-[50%] md:flex items-center md:justify-start gap-4 text-[#7d7979] md:text-sm font-bold cursor-pointer ml-4">
         {path !== "/" && <LinkItem href={`/`}>Home</LinkItem>}
         <LinkItem href={"/pages/favorites"}>Favorites</LinkItem>
         <LinkItem href={`/pages/shoppingcart`}>Shopping Cart</LinkItem>

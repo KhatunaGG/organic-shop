@@ -8,7 +8,7 @@ function Search() {
   const [searchMode, setSearchMode] = useState(false);
   const context = useContext(ClobalContext);
   if (!context) return;
-  const { search, data, length, setSearch, setData, copiedData } = context;
+  const { search, setSearch, setData, copiedData } = context;
 
   const getInputSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -33,7 +33,7 @@ function Search() {
   return (
     <form
       onSubmit={handleSearch}
-      className="w-full px-[3%] lg:px-[7%] py-2 md:w-[50%] relative flex items-center"
+      className="w-full px-[3%] lg:px-[7%] py-2 md:w-[40%] lg:w-[50%] relative flex items-center"
     >
       <SearchIcon />
       <input

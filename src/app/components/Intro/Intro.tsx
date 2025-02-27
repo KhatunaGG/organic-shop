@@ -20,10 +20,6 @@ const Intro = () => {
   return (
     <section className="w-full h-[15vh] md:h-[8vh] bg-green-950 flex flex-row items-center flex-grow justify-between px-[3%] lg:px-[7%] ">
       <div className="w-full flex flex-row ">
-        <div className="w-[10%] md:w-0 md:hidden bg-pink-200 flex items-center justify-center">
-          ddd
-        </div>
-
         <div className="w-[90%] md:w-full  flex flex-col items-center md:justify-between md:flex-row gap-1 ms:gap-0">
           <div className="w-full md:w-[50%] flex flex-row justify-end md:justify-start gap-4">
             <div className="relative">

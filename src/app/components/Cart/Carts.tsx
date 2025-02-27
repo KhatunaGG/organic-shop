@@ -5,6 +5,7 @@ import Coupon from "../Coupon/Coupon";
 import { ClobalContext } from "@/app/context/Context";
 import CartTotal from "../CartTotal/CartTotal";
 import Link from "next/link";
+import BackLink from "../_atoms/BackLink";
 
 const Carts = () => {
   const context = useContext(ClobalContext);
@@ -14,8 +15,12 @@ const Carts = () => {
 
   return (
     <div className="flex flex-col flex-grow  gap-6 mb-10 mt-8 items-center w-full ">
+              <div className=" w-full">
+          <BackLink />
+        </div>
       <h2 className="text-[20px] w-full font-bold text-green-950 text-center uppercase translate-x-4">
         Shopping Cart
+
       </h2>
 
       <div className="w-full flex flex-col flex-grow md:flex-row items-start  md:gap-[1%]  ">
